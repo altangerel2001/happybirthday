@@ -30,7 +30,7 @@
   place-items: center;
 }
 
-/* ✨ Илүү олон од, гялалзсан эффект */
+/* ✨ Илүү олон, гялалзсан од */
 .star {
   position: absolute;
   width: 2px;
@@ -41,7 +41,7 @@
   box-shadow: 0 0 6px 2px #fff;
 }
 
-/* 🎂 Текст */
+/* 🎉 Мэндчилгээ */
 .greeting {
   font-family: 'Cookie', cursive;
   font-size: 4rem;
@@ -58,7 +58,6 @@
   width: 250px;
   height: 75px;
   background: #e0e0e0;
-  margin-top: 0;
   border-radius: 50%;
   box-shadow: 0px 3px 5px 0px #666;
   display: grid;
@@ -104,6 +103,7 @@
   background: inherit;
 }
 
+/* 🍓 Дээрх кремний хэсэг */
 .cake-topping {
   position: absolute;
   bottom: 0%;
@@ -137,14 +137,16 @@
   z-index: 9;
 }
 
-/* 🕯️ 3 лаа */
+/* 🕯️ 3 лаа — яг төвд байрлана */
 .candle-container {
-  width: 150px;
   position: absolute;
-  bottom: 60%;
-  z-index: 9999;
+  bottom: 92%; /* бялуун дээр яг байлгах */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  z-index: 9999;
   opacity: 0;
 }
 
@@ -213,7 +215,7 @@
   </div>
 </div>
 
-<!-- 🌟 Clip path for flame and topping -->
+<!-- 🌟 Clip path -->
 <svg class="svg">
   <clipPath id="my-clip-path" clipPathUnits="objectBoundingBox">
     <path d="M0,0 V0.481 s0.021,0.37,0.078,0.404 s0.035,-0.296,0.102,-0.27 s0.007,0.363,0.096,0.354 s0.028,-0.466,0.1,-0.487 S0.406,0.999,0.457,0.999 s0.03,-0.502,0.075,-0.518 s0.041,0.488,0.081,0.274 c0.007,-0.038,0.021,-0.187,0.044,-0.215 c0.014,-0.017,0.038,0.401,0.075,0.392 s0.023,-0.28,0.074,-0.392 c0.022,-0.04,0.072,0.359,0.1,0.344 c0.057,-0.029,0.094,-0.405,0.094,-0.405 V-0.001"></path>
@@ -233,32 +235,34 @@ for (let i = 0; i < 150; i++) {
   star.style.top = Math.random() * 100 + "%";
   star.style.left = Math.random() * 100 + "%";
   star.style.opacity = Math.random();
-  star.style.transform = `scale(${Math.random() * 1.5})`;
   starsContainer.appendChild(star);
 }
 
-// Оддын анивчилгаа — илүү удаан, зөөлөн
+// Оддын анивчилгаа — зөөлөн, удаан
 gsap.to(".star", {
   opacity: () => Math.random(),
-  duration: () => 3 + Math.random() * 4,
+  duration: () => 4 + Math.random() * 6,
   repeat: -1,
   yoyo: true,
-  stagger: { amount: 5, from: "random" }
+  stagger: { amount: 8, from: "random" }
 });
 
-// 🎂 Бялууны animation
-const tl = gsap.timeline({ duration: 0.6 });
-tl.fromTo('.cake-topping', { yPercent: -300, opacity: 0.3 }, { yPercent: 0, opacity: 1, ease: "bounce.out" })
-  .to('.candle-container', { opacity: 1 })
-  .to('.flame-wrap', { scale: 1, ease: "back.out", stagger: 0.2 })
-  .to('.greeting', { scale: 1, ease: "back.out" });
+// 🎂 Бялуу animation — илүү удаан, унаж ирэх хөдөлгөөн зөөлөн
+const tl = gsap.timeline({ defaults: { ease: "bounce.out" } });
+tl.fromTo('.cake-topping', 
+  { yPercent: -400, opacity: 0.3 }, 
+  { yPercent: 0, opacity: 1, duration: 2.5 } // илүү удаан 2.5 сек
+)
+.to('.candle-container', { opacity: 1, duration: 1 })
+.to('.flame-wrap', { scale: 1, ease: "back.out", stagger: 0.2, duration: 0.8 })
+.to('.greeting', { scale: 1, ease: "back.out", duration: 1.2 });
 
-// 🔥 Галын анивчсан хөдөлгөөн — илүү уян хатан, удаан
+// 🔥 Галын animation — илүү удаан
 gsap.to('.flame-wrap', {
   scaleY: 1.2,
   repeat: -1,
   yoyo: true,
-  duration: 0.8,
+  duration: 1.2,
   ease: "power1.inOut"
 });
 </script>
