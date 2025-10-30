@@ -60,14 +60,21 @@ body { overflow: hidden; }
 
 .greeting {
   font-family: 'Cookie', cursive;
-  font-size: 2.8rem;
   color: #fff4cc;
-  transform: scale(0);
   text-align: center;
   text-shadow: 0 0 15px #ffcc70, 0 0 25px #ffd68a;
   z-index: 10;
-  line-height: 1; 
-  margin: 0;        
+  margin: 0;
+  line-height: 1;
+  opacity: 0;
+  transform: scale(0.8);
+}
+.greeting-main {
+  font-size: 3rem;
+}
+.greeting-name {
+  font-size: 2.5rem;
+  margin-top: -10px;
 }
 
 .plate {
@@ -215,8 +222,8 @@ body { overflow: hidden; }
 
 <div class="wrapper">
   <div class="star-field" id="starField"></div>
- <div class="greeting">Happy Birthday
-                       To ...........</div>
+ <div class="greeting greeting-main">Happy Birthday</div>
+<div class="greeting greeting-name">to ............</div>
   <div class="plate">
     <div class="cake-wrap">
       <div class="cake-topping">
@@ -261,7 +268,6 @@ body { overflow: hidden; }
 </svg>
   
 <script>
-// 🌌 Санамсаргүй од үүсгэх
 const field = document.getElementById('starField');
 for (let i = 0; i < 100; i++) {
   const s = document.createElement('div');
@@ -276,7 +282,8 @@ const tl = gsap.timeline({ duration: 0.3 });
 tl.fromTo('.cake-topping', { yPercent: -300, opacity: 0.5 }, { yPercent: 0, opacity: 1 })
   .to('.candle-container', { opacity: 1, duration: 0.8 })
   .to('.flame-wrap', { scale: 1, ease: "back.out", duration: 0.6 })
-  .to('.greeting', { scale: 1, ease: "back.out", duration: 1 })
+  .to('.greeting-main', { opacity: 1, scale: 1, ease: "back.out", duration: 1 })
+  .to('.greeting-name', { opacity: 1, scale: 1, ease: "back.out", duration: 1 }, "+=0.6")
   .to('.star-deco', {
     opacity: 0.6,
     stagger: 0.1,
@@ -284,6 +291,7 @@ tl.fromTo('.cake-topping', { yPercent: -300, opacity: 0.5 }, { yPercent: 0, opac
       gsap.to('.star-deco', { scale: 0.4, repeat: -1, yoyo: true, duration: 1.5, yoyoEase: "power1.out" });
     }
   });
+
 </script>
 
 </body>
