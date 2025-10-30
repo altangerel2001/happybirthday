@@ -222,7 +222,7 @@ body { overflow: hidden; }
 <div class="wrapper">
   <div class="star-field" id="starField"></div>
  <div class="greeting greeting-main">Happy Birthday to Khulan</div>
-<div class="greeting greeting-name style="margin-top: -10px;">Биеэ бодоорой</div>
+<!-- <div class="greeting greeting-name style="margin-top: -10px;">Биеэ бодоорой</div> -->
   <div class="plate">
     <div class="cake-wrap">
       <div class="cake-topping">
@@ -278,7 +278,10 @@ for (let i = 0; i < 100; i++) {
 }
 
 const tl = gsap.timeline({ duration: 0.3 });
-tl.fromTo('.cake-topping', { yPercent: -300, opacity: 0.5 }, { yPercent: 0, opacity: 1 })
+tl.fromTo('.cake-topping', 
+  { yPercent: -300, opacity: 0.5 }, 
+  { yPercent: 0, opacity: 1, duration: 2, ease: "power2.out" } // <-- нэмсэн хэсэг
+)
   .to('.candle-container', { opacity: 1, duration: 0.8 })
   .to('.flame-wrap', { scale: 1, ease: "back.out", duration: 0.6 })
   .to('.greeting-main', { opacity: 1, scale: 1, ease: "back.out", duration: 1 })
