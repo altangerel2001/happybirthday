@@ -219,6 +219,9 @@ body { overflow: hidden; }
 </style>
 </head>
 <body>
+  <audio id="bg-music" autoplay loop>
+    <source src="sad_version.mp3" type="audio/mpeg">
+  </audio>
 
 <div class="wrapper">
   <div class="star-field" id="starField"></div>
@@ -266,10 +269,6 @@ body { overflow: hidden; }
     <path d="M0.5,0.846 l-0.309,0.154,0.044,-0.357 L0,0.382 l0.336,-0.067 L0.5,0 l0.164,0.315,0.336,0.067,-0.235,0.261,0.044,0.357"></path>
   </clipPath>
 </svg>
-
-<audio id="bg-music" autoplay loop>
-<source src="sad_version.mp3" type="audio/mpeg">
-</audio>
   
 <script>
 const field = document.getElementById('starField');
