@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<title>Төрсөн өдрийн мэндчилгээ бүтээх студи 🎂✨</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b0f2a">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comfortaa:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+
+<!-- Canvas Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+:root {
+  --bg-gradient: radial-gradient(ellipse at bottom, #0f1638 0%, #050714 100%);
+  --accent-gold: #ffd166;
+  --accent-glow: rgba(255, 209, 102, 0.6);
+  --text-main: #fff5ea;
+  --card-bg: rgba(255, 255, 255, 0.07);
+  --card-border: rgba(255, 255, 255, 0.16);
+  --btn-primary: linear-gradient(135deg, #f72585, #7209b7);
+  --btn-gold: linear-gradient(135deg, #f9a03f, #f72585);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg-gradient);
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-main);
+  padding: calc(24px + var(--safe-top)) 16px calc(40px + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background Stars */
+.star-field {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.2;
+  box-shadow: 0 0 6px 1px #fff;
+  animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 0.9; transform: scale(1.5); }
+}
+
+/* Studio Container */
+.studio-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* Header */
+.studio-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.studio-badge {
+  display: inline-block;
+  background: rgba(255, 209, 102, 0.14);
+  border: 1px solid rgba(255, 209, 102, 0.35);
+  color: var(--accent-gold);
+  font-family: 'Comfortaa', cursive;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.studio-title {
+  font-family: 'Comfortaa', cursive;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 700;
+  color: #fff9ea;
+  text-shadow: 0 0 15px var(--accent-glow);
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+
+.studio-desc {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+}
+
+/* Form Card */
+.studio-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 26px 22px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #ffd68a;
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px !important;
+  transition: all 0.25s;
+  outline: none;
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: #f72585;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0 10px rgba(247, 37, 133, 0.4);
+}
+
+.form-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Preset Message Templates */
+.template-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.chip {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  touch-action: manipulation;
+}
+
+.chip:active, .chip:hover {
+  background: rgba(247, 37, 133, 0.35);
+  border-color: #f72585;
+  color: #fff;
+}
+
+/* Theme Options (8 Themes) */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.theme-card {
+  padding: 10px 4px;
+  font-size: 0.78rem;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  color: #fff;
+  text-align: center;
+  font-weight: 600;
+  transition: all 0.2s;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.theme-card[data-value="night"] { background: #0c1236; }
+.theme-card[data-value="rose"] { background: #3b092f; }
+.theme-card[data-value="cosmic"] { background: #200845; }
+.theme-card[data-value="gold"] { background: #382404; }
+.theme-card[data-value="emerald"] { background: #062b1e; }
+.theme-card[data-value="ocean"] { background: #062438; }
+.theme-card[data-value="sunset"] { background: #3f1118; }
+.theme-card[data-value="luxury"] { background: #18181b; }
+
+.theme-card.active {
+  border-color: #ffd166;
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(255, 209, 102, 0.55);
+}
+
+/* Background Effects (4 Options) */
+.effect-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.effect-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  padding: 10px 4px;
+  font-size: 0.78rem;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #fff;
+  text-align: center;
+  font-weight: 600;
+  transition: all 0.2s;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.effect-card.active {
+  background: linear-gradient(135deg, rgba(247, 37, 133, 0.35), rgba(114, 9, 183, 0.45));
+  border-color: #ffd166;
+  box-shadow: 0 0 12px rgba(255, 209, 102, 0.45);
+}
+
+/* Music Options (4 Options) */
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.music-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.music-card.active {
+  background: linear-gradient(135deg, rgba(247, 37, 133, 0.3), rgba(114, 9, 183, 0.4));
+  border-color: #f72585;
+  box-shadow: 0 0 12px rgba(247, 37, 133, 0.35);
+}
+
+.music-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.music-icon {
+  font-size: 1.3rem;
+}
+
+.music-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.btn-preview {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.btn-preview:hover, .btn-preview.playing {
+  background: var(--accent-gold);
+  color: #000;
+  border-color: var(--accent-gold);
+  transform: scale(1.1);
+}
+
+/* Action Buttons Card */
+.actions-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-action-primary {
+  width: 100%;
+  background: var(--btn-gold);
+  color: #fff;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 15px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(249, 160, 63, 0.45);
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  touch-action: manipulation;
+}
+
+.btn-action-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-action-secondary {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 13px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  touch-action: manipulation;
+  text-decoration: none;
+}
+
+.btn-action-secondary:active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: calc(24px + var(--safe-bottom));
+  left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(255, 209, 102, 0.6);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  font-weight: 600;
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2000;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+  max-width: 90vw;
+  white-space: nowrap;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 600px) {
+  body { padding: calc(16px + var(--safe-top)) 12px calc(30px + var(--safe-bottom)); }
+  .studio-card { padding: 20px 16px; border-radius: 20px; }
+  .theme-grid, .effect-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .theme-card, .effect-card { padding: 8px 2px; font-size: 0.72rem; }
+  .music-grid { grid-template-columns: 1fr; gap: 6px; }
+  .btn-action-primary { font-size: 0.98rem; padding: 13px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Audio for piano preview -->
+<audio id="audioPiano" preload="none">
+  <source src="sad_version.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Background Star Field -->
+<div class="star-field" id="starField"></div>
+
+<div class="studio-wrapper">
+  <!-- Studio Header -->
+  <div class="studio-header">
+    <div class="studio-badge">Мэндчилгээ Бүтээгч</div>
+    <h1 class="studio-title">Онцгой төрсөн өдрийн мэндчилгээ бэлтгэх ✨</h1>
+    <p class="studio-desc">Хүлээн авагчийн нэр, сэтгэлийн үгээ оруулаад найздаа илгээх тусгай холбоос үүсгээрэй.</p>
+  </div>
+
+  <!-- Studio Form Card -->
+  <div class="studio-card">
+    <form id="createForm" onsubmit="event.preventDefault(); copyAndShareLink();">
+      
+      <!-- 1. Recipient Name -->
+      <div class="form-group">
+        <label class="form-label" for="inputName">👤 Хүлээн авагчийн нэр:</label>
+        <input type="text" id="inputName" class="form-input" placeholder="Жишээ: Хулан, Тэмүүлэн..." value="Хулан" required>
+      </div>
+
+      <!-- 2. Message & Templates -->
+      <div class="form-group">
+        <label class="form-label" for="inputMsg">💌 Сэтгэлийн үг / Мэндчилгээ:</label>
+        <textarea id="inputMsg" class="form-textarea" placeholder="Хүсэл ерөөлийн сайхан үгээ бичнэ үү...">Энэ хорвоод мэндэлсэн өдрийн баярын мэнд хүргэе! Үргэлж инээмсэглэлээр гэрэлтэж, хүсэл мөрөөдөл бүхэн чинь биелэх болтугай! ✨💖</textarea>
+        
+        <div class="template-chips">
+          <button type="button" class="chip" onclick="applyTemplate('friend')">👯‍♀️ Найздаа</button>
+          <button type="button" class="chip" onclick="applyTemplate('love')">💖 Хайртдаа</button>
+          <button type="button" class="chip" onclick="applyTemplate('success')">🌟 Амжилт</button>
+          <button type="button" class="chip" onclick="applyTemplate('funny')">😜 Хөгжилтэй</button>
+        </div>
+      </div>
+
+      <!-- 3. Sender Name -->
+      <div class="form-group">
+        <label class="form-label" for="inputFrom">🎁 Илгээгч (Хэнээс):</label>
+        <input type="text" id="inputFrom" class="form-input" placeholder="Жишээ: Хайртай найзаас нь..." value="Хайртай найзаас нь">
+      </div>
+
+      <!-- 4. Theme Selector (8 Themes) -->
+      <div class="form-group">
+        <label class="form-label">🎨 Өнгөний сэдэв (Theme):</label>
+        <div class="theme-grid">
+          <div class="theme-card active" data-value="night" onclick="selectTheme('night')">Шөнө 🌌</div>
+          <div class="theme-card" data-value="rose" onclick="selectTheme('rose')">Сарнай 🌸</div>
+          <div class="theme-card" data-value="cosmic" onclick="selectTheme('cosmic')">Сансар 🔮</div>
+          <div class="theme-card" data-value="gold" onclick="selectTheme('gold')">Алтлаг ✨</div>
+          <div class="theme-card" data-value="emerald" onclick="selectTheme('emerald')">Маргад 🌿</div>
+          <div class="theme-card" data-value="ocean" onclick="selectTheme('ocean')">Далай 🌊</div>
+          <div class="theme-card" data-value="sunset" onclick="selectTheme('sunset')">Жаргалт 🌅</div>
+          <div class="theme-card" data-value="luxury" onclick="selectTheme('luxury')">Люкс 🖤</div>
+        </div>
+      </div>
+
+      <!-- 5. Background Effect Selector (4 Effects) -->
+      <div class="form-group">
+        <label class="form-label">✨ Арын анимэйшн эффект:</label>
+        <div class="effect-grid">
+          <div class="effect-card active" data-value="balloons" onclick="selectEffect('balloons')">🎈 Бөмбөлөг</div>
+          <div class="effect-card" data-value="hearts" onclick="selectEffect('hearts')">💖 Зүрх</div>
+          <div class="effect-card" data-value="sakura" onclick="selectEffect('sakura')">🌸 Сакура</div>
+          <div class="effect-card" data-value="fireflies" onclick="selectEffect('fireflies')">✨ Гэрэлт оч</div>
+        </div>
+      </div>
+
+      <!-- 6. Music Track Selector (4 Music Options) -->
+      <div class="form-group">
+        <label class="form-label">🎵 Арын хөгжим (Default Track):</label>
+        <div class="music-grid">
+          
+          <div class="music-card active" data-value="piano" onclick="selectMusic('piano')">
+            <div class="music-info">
+              <span class="music-icon">🎹</span>
+              <span class="music-name">Төгөлдөр хуур</span>
+            </div>
+            <button type="button" class="btn-preview" id="prev-piano" onclick="togglePreview(event, 'piano')">▶</button>
+          </div>
+
+          <div class="music-card" data-value="birthday" onclick="selectMusic('birthday')">
+            <div class="music-info">
+              <span class="music-icon">🎂</span>
+              <span class="music-name">Төрсөн өдөр</span>
+            </div>
+            <button type="button" class="btn-preview" id="prev-birthday" onclick="togglePreview(event, 'birthday')">▶</button>
+          </div>
+
+          <div class="music-card" data-value="cosmic" onclick="selectMusic('cosmic')">
+            <div class="music-info">
+              <span class="music-icon">🌌</span>
+              <span class="music-name">Оддын зүүд</span>
+            </div>
+            <button type="button" class="btn-preview" id="prev-cosmic" onclick="togglePreview(event, 'cosmic')">▶</button>
+          </div>
+
+          <div class="music-card" data-value="none" onclick="selectMusic('none')">
+            <div class="music-info">
+              <span class="music-icon">🔇</span>
+              <span class="music-name">Дуугүй</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions-card">
+        <button type="submit" class="btn-action-primary">
+          🔗 Найздаа илгээх холбоос хуулах
+        </button>
+        <a href="javascript:void(0)" onclick="openPreviewCard()" class="btn-action-secondary">
+          👁️ Мэндчилгээг урьдчилан үзэх
+        </a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span id="toastIcon">📋</span>
+  <span id="toastText">Холбоос хуулагдлаа!</span>
+</div>
+
+<script>
+let currentTheme = 'night';
+let currentEffect = 'balloons';
+let currentMusic = 'piano';
+let currentPreview = null;
+let previewTimeout = null;
+
+const audioPiano = document.getElementById('audioPiano');
+
+const templates = {
+  friend: "Энэ хорвоод мэндэлсэн өдрийн баярын мэнд хүргэе! Үргэлж инээмсэглэлээр гэрэлтэж, хүсэл мөрөөдөл бүхэн чинь биелэх болтугай! ✨💖",
+  love: "Миний ертөнцийн хамгийн тод оч болсон чамдаа төрсөн өдрийн халуун мэндийг хүргэе. Үргэлж хамтдаа инээмсэглэж яваарай! 🌹❤️",
+  success: "Төрсөн өдрийн гал халуун мэнд хүргэе! Ирээдүйн бүх зорилго, хүсэл тэмүүлэл нь сүндэрлэн биелж, эрүүл энх байхыг ерөөе! 🌟🥂",
+  funny: "Нэг насаар хөгширч байгаад нь баяр хүргэе! Гэхдээ битгий санаа зов, чи хэзээд миний харсан хамгийн хөөрхөн нь шүү! 🥳🎂"
+};
+
+function applyTemplate(key) {
+  if (templates[key]) {
+    document.getElementById('inputMsg').value = templates[key];
+  }
+}
+
+function selectTheme(theme) {
+  currentTheme = theme;
+  document.querySelectorAll('.theme-card').forEach(c => {
+    c.classList.toggle('active', c.getAttribute('data-value') === theme);
+  });
+
+  // Suggest matching background effect
+  if (theme === 'rose') selectEffect('sakura');
+  else if (theme === 'gold' || theme === 'luxury') selectEffect('fireflies');
+  else if (theme === 'sunset') selectEffect('hearts');
+  else if (theme === 'emerald' || theme === 'ocean') selectEffect('fireflies');
+  else selectEffect('balloons');
+}
+
+function selectEffect(effect) {
+  currentEffect = effect;
+  document.querySelectorAll('.effect-card').forEach(c => {
+    c.classList.toggle('active', c.getAttribute('data-value') === effect);
+  });
+}
+
+function selectMusic(music) {
+  currentMusic = music;
+  document.querySelectorAll('.music-card').forEach(c => {
+    c.classList.toggle('active', c.getAttribute('data-value') === music);
+  });
+}
+
+// --- Preview Audio ---
+function getAudioContext() {
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  return AudioCtx ? new AudioCtx() : null;
+}
+
+function togglePreview(e, type) {
+  e.stopPropagation();
+  selectMusic(type);
+
+  if (currentPreview === type) {
+    stopPreview();
+    return;
+  }
+
+  stopPreview();
+  currentPreview = type;
+  const btn = document.getElementById(`prev-${type}`);
+  if (btn) btn.innerText = '⏹';
+
+  if (type === 'piano') {
+    audioPiano.currentTime = 0;
+    audioPiano.play().catch(() => {});
+  } else if (type === 'birthday') {
+    playBirthdayPreview();
+  } else if (type === 'cosmic') {
+    playCosmicPreview();
+  }
+
+  previewTimeout = setTimeout(() => {
+    stopPreview();
+  }, 4500);
+}
+
+function stopPreview() {
+  audioPiano.pause();
+  audioPiano.currentTime = 0;
+  if (currentPreview) {
+    const btn = document.getElementById(`prev-${currentPreview}`);
+    if (btn) btn.innerText = '▶';
+    currentPreview = null;
+  }
+  clearTimeout(previewTimeout);
+}
+
+function playBirthdayPreview() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const melody = [
+    { f: 392.00, d: 0.28 }, { f: 392.00, d: 0.16 }, { f: 440.00, d: 0.44 }, { f: 392.00, d: 0.44 }, { f: 523.25, d: 0.44 }, { f: 493.88, d: 0.85 }
+  ];
+  let time = 0;
+  melody.forEach(n => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.value = n.f;
+    gain.gain.setValueAtTime(0.2, ctx.currentTime + time);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + time + n.d);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(ctx.currentTime + time);
+    osc.stop(ctx.currentTime + time + n.d);
+    time += n.d + 0.05;
+  });
+}
+
+function playCosmicPreview() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const notes = [523.25, 659.25, 783.99, 987.77, 1046.50];
+  notes.forEach((f, idx) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = f;
+    gain.gain.setValueAtTime(0.2, ctx.currentTime + idx * 0.25);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.25 + 0.8);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(ctx.currentTime + idx * 0.25);
+    osc.stop(ctx.currentTime + idx * 0.25 + 0.8);
+  });
+}
+
+// --- Build URL & Share ---
+function buildShareUrl() {
+  const name = document.getElementById('inputName').value.trim() || 'найз';
+  const msg = document.getElementById('inputMsg').value.trim() || templates.friend;
+  const from = document.getElementById('inputFrom').value.trim() || 'Найзаас нь';
+
+  // Base URL pointing to index.html (the pure recipient card)
+  const url = new URL(window.location.href);
+  if (url.protocol === 'file:') {
+    url.pathname = url.pathname.replace(/create\.html$/, 'index.html');
+  } else {
+    url.pathname = url.pathname.replace(/\/create(\.html)?\/?$/, '/');
+  }
+  
+  url.searchParams.set('name', name);
+  url.searchParams.set('msg', msg);
+  url.searchParams.set('from', from);
+  url.searchParams.set('theme', currentTheme);
+  url.searchParams.set('effect', currentEffect);
+  url.searchParams.set('music', currentMusic);
+
+  return url.toString();
+}
+
+async function copyAndShareLink() {
+  stopPreview();
+  const shareUrl = buildShareUrl();
+  const name = document.getElementById('inputName').value.trim() || 'найз';
+
+  confetti({ particleCount: 30, spread: 60, origin: { y: 0.7 } });
+
+  // If mobile Web Share API is available (Messenger, Telegram, WhatsApp, Instagram direct)
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: `Төрсөн өдрийн мэнд хүргэе, ${name}! 🎂`,
+        text: `Танд зориулсан онцгой төрсөн өдрийн мэндчилгээ ирлээ! ✨`,
+        url: shareUrl
+      });
+      showToast('Амжилттай илгээлээ! 🎉');
+      return;
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        copyToClipboard(shareUrl);
+      }
+    }
+  } else {
+    copyToClipboard(shareUrl);
+  }
+}
+
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('📋 Холбоос хуулагдлаа! Найз руугаа илгээгээрэй 💌');
+    }).catch(() => {
+      prompt('Холбоосыг хуулж авна уу:', text);
+    });
+  } else {
+    prompt('Холбоосыг хуулж авна уу:', text);
+  }
+}
+
+function openPreviewCard() {
+  stopPreview();
+  const shareUrl = buildShareUrl();
+  window.open(shareUrl, '_blank');
+}
+
+// --- Toast ---
+let toastTimeout;
+function showToast(text, icon = '📋') {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastText').innerText = text;
+  document.getElementById('toastIcon').innerText = icon;
+  toast.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => toast.classList.remove('show'), 3200);
+}
+
+// --- Star Field ---
+document.addEventListener('DOMContentLoaded', () => {
+  const field = document.getElementById('starField');
+  for (let i = 0; i < 40; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.animationDelay = (Math.random() * 3) + 's';
+    field.appendChild(s);
+  }
+});
+</script>
+
+</body>
+</html>

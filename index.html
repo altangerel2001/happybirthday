@@ -286,10 +286,57 @@ html, body {
   pointer-events: none;
 }
 
+.nav-brand {
+  font-size: 1.25rem;
+  filter: drop-shadow(0 2px 8px rgba(255, 209, 102, 0.4));
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.95;
+}
+
 .nav-group {
   display: flex;
   gap: 8px;
   pointer-events: auto;
+}
+
+.recipient-footer {
+  margin-top: 24px;
+  margin-bottom: calc(16px + var(--safe-bottom));
+  text-align: center;
+  z-index: 10;
+  position: relative;
+  width: 100%;
+}
+
+.create-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px dashed rgba(255, 255, 255, 0.22);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.create-card-link:hover, .create-card-link:active {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border-color: var(--accent-gold);
+  transform: translateY(-1px);
+}
+
+.create-card-link strong {
+  color: var(--accent-gold);
+  font-weight: 700;
+  text-decoration: underline;
 }
 
 .glass-btn {
@@ -1304,18 +1351,13 @@ html, body {
 <!-- Floating Balloons -->
 <div class="balloon-container" id="balloonContainer"></div>
 
-<!-- Top Navigation -->
+<!-- Top Navigation (Clean Recipient View) -->
 <nav class="nav-bar">
-  <div class="nav-group">
-    <button class="glass-btn" id="btnOpenModal" title="Өөрийн нэрээр мэндчилгээ үүсгэх">
-      ✏️ <span>Үүсгэх</span>
-    </button>
+  <div class="nav-brand">
+    <span class="brand-sparkle">🎂✨</span>
   </div>
   
   <div class="nav-group">
-    <button class="glass-btn" id="btnShareCard" title="Найздаа илгээх холбоос хуваалцах">
-      🔗 <span>Хуваалцах</span>
-    </button>
     <button class="glass-btn paused" id="btnMusicToggle" title="Хөгжим тоглуулах / түр зогсоох">
       🎵 <span id="musicText">Ая</span>
       <div class="music-bars">
@@ -1535,83 +1577,16 @@ html, body {
         🎁 <span>Бэлэг задлах</span>
       </button>
     </div>
+
+    <!-- Discreet link to the Creation Studio -->
+    <div class="recipient-footer">
+      <a href="create.html" class="create-card-link" title="Өөрийн нэрээр шинэ мэндчилгээ бүтээх">
+        ✨ Өөр хүнд зориулж мэндчилгээ бүтээх үү? <strong>Энд дарна уу 🪄</strong>
+      </a>
+    </div>
   </div>
 
 </main>
-
-<!-- ==============================================================
-     MODAL: CUSTOMIZE GREETING & INPUT (Mobile Bottom-Sheet)
-     ============================================================== -->
-<div class="modal-overlay" id="configModal">
-  <div class="modal-card">
-    <div class="sheet-handle"></div>
-    <div class="modal-header">
-      <h2 class="modal-title">✨ Мэндчилгээг тохируулах ✨</h2>
-      <p class="modal-desc">Нэр болон хүслээ оруулаад найздаа илгээх тусгай холбоос үүсгээрэй!</p>
-    </div>
-
-    <form id="greetingForm" onsubmit="event.preventDefault(); applyCustomGreeting();">
-      <!-- Recipient Name -->
-      <div class="form-group">
-        <label class="form-label" for="inputName">👤 Хүлээн авагчийн нэр:</label>
-        <input type="text" id="inputName" class="form-input" placeholder="Жишээ: Хулан, Тэмүүлэн..." required>
-      </div>
-
-      <!-- Personalized Message -->
-      <div class="form-group">
-        <label class="form-label" for="inputMsg">💌 Сэтгэлийн үг / Мэндчилгээ:</label>
-        <textarea id="inputMsg" class="form-textarea" placeholder="Хүсэл ерөөлийн сайхан үгээ бичнэ үү..."></textarea>
-        
-        <!-- Quick Preset Chips -->
-        <div class="template-chips">
-          <button type="button" class="chip" onclick="applyTemplate('friend')">👯‍♀️ Найздаа</button>
-          <button type="button" class="chip" onclick="applyTemplate('love')">💖 Хайртдаа</button>
-          <button type="button" class="chip" onclick="applyTemplate('success')">🌟 Амжилт</button>
-          <button type="button" class="chip" onclick="applyTemplate('funny')">😜 Хөгжилтэй</button>
-        </div>
-      </div>
-
-      <!-- Sender Name -->
-      <div class="form-group">
-        <label class="form-label" for="inputFrom">🎁 Илгээгч (Хэнээс):</label>
-        <input type="text" id="inputFrom" class="form-input" placeholder="Жишээ: Хайртай найзаас нь...">
-      </div>
-
-      <!-- Theme Selector (8 Rich Themes) -->
-      <div class="form-group">
-        <label class="form-label">🎨 Өнгөний сэдэв (Theme):</label>
-        <div class="theme-options">
-          <div class="theme-btn active" data-value="night" onclick="selectTheme('night')">Шөнө 🌌</div>
-          <div class="theme-btn" data-value="rose" onclick="selectTheme('rose')">Сарнай 🌸</div>
-          <div class="theme-btn" data-value="cosmic" onclick="selectTheme('cosmic')">Сансар 🔮</div>
-          <div class="theme-btn" data-value="gold" onclick="selectTheme('gold')">Алтлаг ✨</div>
-          <div class="theme-btn" data-value="emerald" onclick="selectTheme('emerald')">Маргад 🌿</div>
-          <div class="theme-btn" data-value="ocean" onclick="selectTheme('ocean')">Далай 🌊</div>
-          <div class="theme-btn" data-value="sunset" onclick="selectTheme('sunset')">Жаргалт 🌅</div>
-          <div class="theme-btn" data-value="luxury" onclick="selectTheme('luxury')">Люкс 🖤</div>
-        </div>
-      </div>
-
-      <!-- Background Effect Selector -->
-      <div class="form-group">
-        <label class="form-label">✨ Арын анимэйшн эффект:</label>
-        <div class="effect-options">
-          <div class="effect-btn active" data-value="balloons" onclick="selectEffect('balloons')">🎈 Бөмбөлөг</div>
-          <div class="effect-btn" data-value="hearts" onclick="selectEffect('hearts')">💖 Зүрх</div>
-          <div class="effect-btn" data-value="sakura" onclick="selectEffect('sakura')">🌸 Сакура</div>
-          <div class="effect-btn" data-value="fireflies" onclick="selectEffect('fireflies')">✨ Гэрэлт оч</div>
-        </div>
-      </div>
-
-      <!-- Modal Actions -->
-      <div class="modal-actions">
-        <button type="button" class="btn-secondary" onclick="closeModal()">Хаах</button>
-        <button type="submit" class="btn-primary">🎉 Үзэх</button>
-        <button type="button" class="btn-primary btn-share" onclick="shareGreeting()">🔗 Хуваалцах</button>
-      </div>
-    </form>
-  </div>
-</div>
 
 <!-- Modal: Surprise Gift Box -->
 <div class="modal-overlay" id="giftModal">
@@ -2376,22 +2351,6 @@ function selectTheme(theme) {
   else selectEffect('balloons');
 }
 
-// --- Template Selector in Modal ---
-function applyTemplate(key) {
-  if (templates[key]) {
-    document.getElementById('inputMsg').value = templates[key];
-  }
-}
-
-// --- Modal Management ---
-function openModal() {
-  document.getElementById('configModal').classList.add('open');
-}
-
-function closeModal() {
-  document.getElementById('configModal').classList.remove('open');
-}
-
 function openGiftModal() {
   const msgEl = document.getElementById('giftMessage');
   const randomMsg = fortuneGifts[Math.floor(Math.random() * fortuneGifts.length)];
@@ -2403,28 +2362,6 @@ function openGiftModal() {
 
 function closeGiftModal() {
   document.getElementById('giftModal').classList.remove('open');
-}
-
-// --- Apply Custom Greeting from Modal ---
-function applyCustomGreeting() {
-  const nameInput = document.getElementById('inputName').value.trim() || 'найз';
-  const msgInput = document.getElementById('inputMsg').value.trim() || templates.friend;
-  const fromInput = document.getElementById('inputFrom').value.trim() || 'Найзаас нь';
-
-  updateCardContent(nameInput, msgInput, fromInput, currentTheme);
-  closeModal();
-
-  // Hide intro if still visible
-  const intro = document.getElementById('introScreen');
-  if (intro) intro.style.display = 'none';
-
-  // Play selected music if not already playing
-  if (!isMusicPlaying) {
-    playSelectedMusic();
-  }
-
-  playCelebrationTimeline();
-  showToast(`🎉 ${nameInput}-д зориулсан мэндчилгээ бэлэн боллоо!`);
 }
 
 function updateCardContent(name, msg, from, theme) {
@@ -2440,71 +2377,6 @@ function updateCardContent(name, msg, from, theme) {
   }
 
   if (theme) selectTheme(theme);
-
-  // Sync inputs
-  document.getElementById('inputName').value = name;
-  document.getElementById('inputMsg').value = msg;
-  document.getElementById('inputFrom').value = from;
-}
-
-// --- Shareable URL Builder ---
-function getShareableUrl() {
-  const name = document.getElementById('inputName').value.trim() || 'найз';
-  const msg = document.getElementById('inputMsg').value.trim() || templates.friend;
-  const from = document.getElementById('inputFrom').value.trim() || 'Найзаас нь';
-  const theme = currentTheme;
-  const music = selectedMusicType;
-  const effect = currentEffect;
-
-  const url = new URL(window.location.href);
-  url.searchParams.set('name', name);
-  url.searchParams.set('msg', msg);
-  url.searchParams.set('from', from);
-  url.searchParams.set('theme', theme);
-  url.searchParams.set('music', music);
-  url.searchParams.set('effect', effect);
-
-  return url.toString();
-}
-
-// --- Native Mobile Web Share API & Clipboard Fallback ---
-async function shareGreeting() {
-  const shareUrl = getShareableUrl();
-  const name = document.getElementById('inputName').value.trim() || 'найз';
-
-  const shareData = {
-    title: `Төрсөн өдрийн мэнд хүргэе, ${name}! 🎂`,
-    text: `Танд зориулсан онцгой төрсөн өдрийн интерактив мэндчилгээ ирлээ! ✨`,
-    url: shareUrl
-  };
-
-  // If mobile supports Web Share API (Messenger, Telegram, WhatsApp, Instagram direct)
-  if (navigator.share) {
-    try {
-      await navigator.share(shareData);
-      showToast('Амжилттай хуваалцлаа! 🎉');
-      return;
-    } catch (err) {
-      // User cancelled share sheet or fallback
-      if (err.name !== 'AbortError') {
-        copyToClipboard(shareUrl);
-      }
-    }
-  } else {
-    copyToClipboard(shareUrl);
-  }
-}
-
-function copyToClipboard(text) {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => {
-      showToast('📋 Холбоос хуулагдлаа! Найз руугаа илгээгээрэй 💌');
-    }).catch(() => {
-      prompt('Холбоосыг хуулж авна уу:', text);
-    });
-  } else {
-    prompt('Холбоосыг хуулж авна уу:', text);
-  }
 }
 
 // --- Toast helper ---
@@ -2537,7 +2409,7 @@ function initFromUrlParams() {
   if (name) {
     updateCardContent(name, msg || templates.friend, from || 'Найзаас нь', theme || 'night');
   } else {
-    updateCardContent('найз', templates.friend, 'Найзаас нь', 'night');
+    updateCardContent('Найз минь', templates.friend, 'Найзаас нь', 'night');
   }
 
   if (effect && ['balloons', 'hearts', 'sakura', 'fireflies'].includes(effect)) {
@@ -2556,19 +2428,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initFromUrlParams();
 
-  // Attach button events
-  document.getElementById('btnOpenModal').addEventListener('click', openModal);
-  document.getElementById('btnShareCard').addEventListener('click', shareGreeting);
+  // Attach recipient interactive button events
   document.getElementById('btnMusicToggle').addEventListener('click', toggleMusic);
   document.getElementById('btnBlowCandle').addEventListener('click', handleBlowCandle);
   document.getElementById('cakeStage').addEventListener('click', handleBlowCandle);
   document.getElementById('btnPopConfetti').addEventListener('click', launchMegaCelebration);
   document.getElementById('btnOpenGift').addEventListener('click', openGiftModal);
 
-  // Close modals on clicking overlay background
-  document.getElementById('configModal').addEventListener('click', (e) => {
-    if (e.target.id === 'configModal') closeModal();
-  });
+  // Close gift modal on clicking overlay background
   document.getElementById('giftModal').addEventListener('click', (e) => {
     if (e.target.id === 'giftModal') closeGiftModal();
   });
