@@ -1,33 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+<title>Төрсөн өдрийн баярын мэнд хүргэе! 🎂✨</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b0f2a">
+
+<!-- Open Graph / Meta for Vercel, Messenger, Telegram Link Sharing -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Төрсөн өдрийн баярын мэнд хүргэе! 🎂✨">
+<meta property="og:description" content="Танд зориулсан онцгой төрсөн өдрийн интерактив мэндчилгээ. Лаагаа үлээж хүслээ шивнээрэй!">
+
+<!-- Google Fonts for English and Mongolian Cyrillic support -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comfortaa:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+
+<!-- GSAP for timeline animations -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<!-- Canvas Confetti for magical celebration bursts -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { overflow: hidden; }
-.svg { position: absolute; width: 0; height: 0; }
-  
-.wrapper {
-  position: relative;
-  height: 100vh;
-  background: radial-gradient(ellipse at bottom, #0b0f2a 0%, #05060d 100%);
-  overflow: hidden;
-  display: grid;
-  place-items: center;
+:root {
+  --bg-gradient: radial-gradient(ellipse at bottom, #0f1638 0%, #050714 100%);
+  --accent-gold: #ffd166;
+  --accent-glow: rgba(255, 209, 102, 0.6);
+  --text-main: #fff5ea;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-border: rgba(255, 255, 255, 0.18);
+  --btn-primary: linear-gradient(135deg, #f72585, #7209b7);
+  --btn-gold: linear-gradient(135deg, #f9a03f, #f72585);
+  --cake-plate: #f3f4f6;
+  --cake-cream: #ffe5ec;
+  --cake-drip: #ff758f;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* ✨ Шөнийн тэнгэрийн гялтганаа */
-.star-field {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;
+[data-theme="rose"] {
+  --bg-gradient: radial-gradient(ellipse at bottom, #300a29 0%, #0d0210 100%);
+  --accent-gold: #ff9ebb;
+  --accent-glow: rgba(255, 158, 187, 0.6);
+  --btn-gold: linear-gradient(135deg, #ff758f, #c9184a);
 }
+
+[data-theme="cosmic"] {
+  --bg-gradient: radial-gradient(ellipse at bottom, #1b0a3c 0%, #060214 100%);
+  --accent-gold: #a78bfa;
+  --accent-glow: rgba(167, 139, 250, 0.6);
+  --btn-gold: linear-gradient(135deg, #8b5cf6, #ec4899);
+}
+
+[data-theme="gold"] {
+  --bg-gradient: radial-gradient(ellipse at bottom, #382506 0%, #0e0901 100%);
+  --accent-gold: #fbbf24;
+  --accent-glow: rgba(251, 191, 36, 0.7);
+  --btn-gold: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: var(--bg-gradient);
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-main);
+  position: relative;
+  transition: background 0.8s ease;
+}
+
+/* Background Stars */
+.star-field {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .star {
   position: absolute;
   width: 2px;
@@ -38,262 +96,1630 @@ body { overflow: hidden; }
   box-shadow: 0 0 6px 2px #fff;
   animation: twinkle 3s infinite ease-in-out;
 }
+
 @keyframes twinkle {
-  0%, 100% { opacity: 0.1; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.5); }
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.6); }
 }
 
-/* ✨ Одууд аажмаар хөдөлдөг */
-@keyframes drift {
-  from { transform: translateY(0px); }
-  to { transform: translateY(-200px); }
-}
 .star-field::after {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-  background-size: 4px 4px;
-  animation: drift 60s linear infinite;
-  opacity: 0.2;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 8px 8px;
+  animation: drift 70s linear infinite;
+  opacity: 0.25;
 }
 
-.greeting {
-  font-family: 'Cookie', cursive;
-  color: #fff4cc;
-  text-align: center;
-  text-shadow: 0 0 15px #ffcc70, 0 0 25px #ffd68a;
-  z-index: 10;
-  margin: 0;
-  line-height: 0.2;
-  opacity: 0;
-  transform: scale(0.9);
-}
-.greeting-main {
-  font-size: 2.5rem;
-}
-.greeting-name {
-  font-size: 1.5rem;
-  margin-top: -10px;
+@keyframes drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-300px); }
 }
 
-.plate {
-  position: relative;
-  width: 200px;
-  height: 60px;
-  background: #f1f1f1;
-  border-radius: 50%;
-  box-shadow: 0px 3px 6px rgba(255,255,255,0.2);
-  display: grid;
-  place-items: center;
-  z-index: 5;
+/* Floating Balloons */
+.balloon-container {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
 }
 
-.cake-wrap {
+.balloon {
   position: absolute;
-  bottom: 50%;
+  bottom: -120px;
+  width: 42px;
+  height: 54px;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: inset -5px -5px 10px rgba(0,0,0,0.25), 0 8px 20px rgba(0,0,0,0.3);
+  animation: floatUp 15s linear infinite;
 }
 
-.cake-base {
-  position: relative;
-  width: 150px;
-  height: 40px;
-  background: rgb(197,165,192);
+.balloon:active, .balloon:hover {
+  transform: scale(1.15) rotate(6deg);
 }
-.cake-base .base-front { position: absolute; width: 100%; height: 100%; background: inherit; }
-.cake-base .base-front:after {
-  content: '';
+
+.balloon::after {
+  content: "";
   position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 8px solid currentColor;
+}
+
+.balloon::before {
+  content: "";
+  position: absolute;
+  bottom: -36px;
+  left: 50%;
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateX(-50%);
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.85; }
+  90% { opacity: 0.85; }
+  100% { transform: translateY(-120vh) rotate(15deg); opacity: 0; }
+}
+
+/* Top Navigation Bar */
+.nav-bar {
+  position: fixed;
+  top: calc(12px + var(--safe-top));
   left: 0;
-  top: 100%;
   width: 100%;
-  height: 45px;
-  transform: translateY(-50%);
-  background: inherit;
-  border-radius: 50%;
-}
-.cake-base .base-top {
-  position: absolute;
-  width: 100%;
-  height: 55px;
-  top: 0;
-  transform: translateY(-50%);
-  border-radius: 50%;
-  background: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  z-index: 100;
+  pointer-events: none;
 }
 
-.cake-topping {
-  position: absolute;
-  bottom: 0%;
-  width: 150px;
-  height: 75px;
-  z-index: 99;
-}
-.cake-topping .topping-front {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, #b381ae 40%, transparent);
-}
-.cake-topping .topping-front .top-layer { height: 30%; background: #b381ae; }
-.cake-topping .topping-front .bottom-layer {
-  position: relative;
-  height: 70%;
-  background: #b381ae;
-  clip-path: url('#my-clip-path');
-}
-.cake-topping .topping-top {
-  background: #b381ae;
-  position: absolute;
-  width: 100%;
-  height: 55px;
-  top: 0;
-  transform: translateY(-50%);
-  border-radius: 50%;
-  z-index: 9;
+.nav-group {
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
 }
 
-.candle-container {
-  width: 150px;
-  position: absolute;
-  bottom: 65%;
-  z-index: 9999;
-  display: grid;
-  place-items: center;
-  opacity: 0;
+.glass-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: all 0.25s ease;
+  user-select: none;
+  touch-action: manipulation;
 }
 
-.candle-wrap {
-  position: relative;
-  width: 10px;
+.glass-btn:active {
+  transform: scale(0.96);
+  background: rgba(255, 255, 255, 0.25);
 }
 
-.flame-wrap {
-  position: relative;
-  z-index: 99;
-  width: 100%;
-  background: radial-gradient(ellipse at center, #ffd700 0%, #ff7f00 70%, #ff4500 100%);
-  height: 20px;
-  transform-origin: bottom center;
-  transform: scale(0);
-  clip-path: url(#my-flame-path);
-  box-shadow: 0 0 15px 5px rgba(255, 200, 80, 0.7);
-  animation: flicker 1s infinite ease-in-out alternate;
-}
-@keyframes flicker {
-  0% { transform: scaleY(0.9) scaleX(1); opacity: 0.8; }
-  100% { transform: scaleY(1.1) scaleX(1.05); opacity: 1; }
+.glass-btn.active {
+  background: linear-gradient(135deg, #f72585, #7209b7);
+  border-color: rgba(255,255,255,0.4);
 }
 
-.candle-base {
-  position: relative;
-  width: 100%;
-  height: 55px;
-  margin: 2px 0;
-  background: repeating-linear-gradient(45deg, #eee, #f0abf0 20%);
-}
-.candle-top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translateY(-50%);
-  width: 100%;
-  height: 6px;
-  border-radius: 50%;
-  background: radial-gradient(#eee, #f0abf0);
-}
-
-.star-deco {
-  width: 12px;
+/* Music bars animation */
+.music-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
   height: 12px;
-  position: absolute;
-  background-color: gold;
-  clip-path: url(#my-star-path);
-  opacity: 0;
-  filter: drop-shadow(0 0 8px gold);
 }
-.star-deco:nth-of-type(1) { top: -20%; left: 30%; }
-.star-deco:nth-of-type(2) { top: 30%; left: 10%; }
-.star-deco:nth-of-type(3) { top: -10%; left: 85%; }
-.star-deco:nth-of-type(4) { top: 35%; left: 65%; }
-.star-deco:nth-of-type(5) { top: 55%; left: 90%; }
+.music-bar {
+  width: 2.5px;
+  background: #fff;
+  border-radius: 2px;
+  animation: soundBars 0.8s ease-in-out infinite alternate;
+}
+.music-bar:nth-child(1) { height: 4px; animation-delay: 0.1s; }
+.music-bar:nth-child(2) { height: 12px; animation-delay: 0.3s; }
+.music-bar:nth-child(3) { height: 7px; animation-delay: 0.2s; }
+@keyframes soundBars {
+  0% { height: 3px; }
+  100% { height: 12px; }
+}
+.paused .music-bar {
+  animation-play-state: paused;
+  height: 3px;
+}
+
+/* Main Content Stage */
+.main-stage {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(64px + var(--safe-top)) 16px calc(24px + var(--safe-bottom));
+  z-index: 10;
+  text-align: center;
+}
+
+/* Greeting Header */
+.greeting-box {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 12px;
+  z-index: 15;
+}
+
+.greeting-sup {
+  font-family: 'Comfortaa', cursive;
+  font-size: clamp(0.85rem, 2.5vw, 1.2rem);
+  color: var(--accent-gold);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  text-shadow: 0 0 10px var(--accent-glow);
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.greeting-name {
+  font-family: 'Caveat', 'Pacifico', cursive;
+  font-size: clamp(2.3rem, 7vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #fff9ea;
+  text-shadow: 0 0 18px var(--accent-glow), 0 0 35px rgba(255, 209, 102, 0.4);
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: scale(0.85);
+  word-break: break-word;
+}
+
+.message-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 12px 18px;
+  border-radius: 18px;
+  max-width: 520px;
+  margin: 0 auto 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.3s ease;
+}
+
+.greeting-text {
+  font-size: clamp(0.95rem, 2.4vw, 1.15rem);
+  line-height: 1.5;
+  color: #ffffff;
+  font-weight: 500;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.greeting-from {
+  margin-top: 6px;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--accent-gold);
+  text-align: right;
+  display: block;
+}
+
+/* ==============================================================
+   NEW BEAUTIFUL SVG MULTI-TIER BIRTHDAY CAKE (Responsive & Crisp)
+   ============================================================== */
+.cake-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 0 14px;
+  z-index: 20;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cake-svg-wrapper {
+  width: min(290px, 78vw);
+  max-width: 310px;
+  height: auto;
+  position: relative;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.55));
+  transition: transform 0.2s ease;
+}
+
+.cake-svg-wrapper:active {
+  transform: scale(0.98);
+}
+
+/* Minimalist Candle flames glow & individual flicker */
+.candle-flame {
+  animation: svgFlicker 1.1s infinite alternate ease-in-out;
+  cursor: pointer;
+}
+.flame-1 { transform-origin: 112px 78px; animation-delay: 0s; }
+.flame-2 { transform-origin: 141px 72px; animation-delay: 0.22s; }
+.flame-3 { transform-origin: 170px 68px; animation-delay: 0.1s; }
+.flame-4 { transform-origin: 199px 72px; animation-delay: 0.32s; }
+.flame-5 { transform-origin: 228px 78px; animation-delay: 0.16s; }
+
+@keyframes svgFlicker {
+  0% { transform: scale(0.93) rotate(-1.5deg); filter: drop-shadow(0 0 8px #ffb703); }
+  50% { transform: scale(1.06) rotate(1.2deg); filter: drop-shadow(0 0 14px #ffd166); }
+  100% { transform: scale(0.97) rotate(-0.5deg); filter: drop-shadow(0 0 10px #ff9e00); }
+}
+
+/* Smoke puff trail when blown out */
+.candle-smoke {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ==============================================================
+   LIGHTS OUT / DRAMATIC COUNTDOWN & WISH OVERLAY
+   ============================================================== */
+.lights-out-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: radial-gradient(circle at 50% 55%, rgba(6, 8, 20, 0.75) 0%, rgba(2, 3, 8, 0.98) 75%, #000000 100%);
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: calc(85px + var(--safe-top));
+}
+
+.lights-out-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.countdown-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 55;
+  user-select: none;
+}
+
+.countdown-hint {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.8rem, 6vw, 2.8rem);
+  color: #fff9ea;
+  text-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(255, 209, 102, 0.5);
+  margin-bottom: 6px;
+  animation: pulseHint 1.2s infinite alternate ease-in-out;
+}
+
+@keyframes pulseHint {
+  from { opacity: 0.85; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1.02); }
+}
+
+.countdown-number {
+  font-family: 'Comfortaa', cursive;
+  font-size: clamp(4.5rem, 15vw, 7.5rem);
+  font-weight: 800;
+  color: var(--accent-gold);
+  line-height: 1;
+  text-shadow: 0 0 30px rgba(255, 209, 102, 0.9), 0 0 60px rgba(247, 37, 133, 0.6);
+  transform: scale(1);
+  will-change: transform, opacity;
+}
+
+/* Spotlighted Cake when lights are out */
+.cake-stage {
+  transition: filter 0.6s ease, transform 0.6s ease;
+}
+
+.cake-stage.spotlight {
+  z-index: 60 !important;
+  filter: drop-shadow(0 0 35px rgba(255, 209, 102, 0.95)) drop-shadow(0 0 70px rgba(255, 150, 0, 0.5)) !important;
+  transform: scale(1.05);
+}
+
+.dimmed {
+  opacity: 0.05 !important;
+  filter: blur(5px) !important;
+  pointer-events: none !important;
+  transition: opacity 0.7s ease, filter 0.7s ease !important;
+}
+
+/* Interactive Controls under Cake */
+.action-box {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 25;
+  width: 100%;
+  max-width: 440px;
+}
+
+.blow-btn {
+  background: var(--btn-gold);
+  color: #fff;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.92rem, 2.5vw, 1.05rem);
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(249, 160, 63, 0.4), inset 0 1px 1px rgba(255,255,255,0.4);
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  animation: pulseBtn 2s infinite ease-in-out;
+  touch-action: manipulation;
+}
+
+@keyframes pulseBtn {
+  0%, 100% { transform: scale(1); box-shadow: 0 8px 24px rgba(249, 160, 63, 0.4); }
+  50% { transform: scale(1.04); box-shadow: 0 12px 30px rgba(249, 160, 63, 0.65); }
+}
+
+.blow-btn:active {
+  transform: scale(0.96);
+}
+
+.wish-granted-banner {
+  display: none;
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+  font-weight: 700;
+  color: var(--accent-gold);
+  text-shadow: 0 0 15px var(--accent-glow);
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  padding: 0 10px;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.surprise-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+/* ==============================================================
+   MOBILE-FIRST BOTTOM-SHEET / MODAL CONFIG DIALOG
+   ============================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 16px;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: rgba(18, 22, 42, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 26px;
+  width: 100%;
+  max-width: 520px;
+  padding: 28px 24px calc(24px + var(--safe-bottom));
+  box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 40px rgba(247, 37, 133, 0.2);
+  transform: translateY(20px) scale(0.96);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-height: 90vh;
+  max-height: 90dvh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-overlay.open .modal-card {
+  transform: translateY(0) scale(1);
+}
+
+/* Mobile Bottom-sheet styling for phones */
+@media (max-width: 600px) {
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .modal-card {
+    border-radius: 24px 24px 0 0;
+    max-height: 86vh;
+    max-height: 86dvh;
+    padding: 20px 20px calc(24px + var(--safe-bottom));
+    transform: translateY(100%);
+  }
+  .modal-overlay.open .modal-card {
+    transform: translateY(0);
+  }
+  .sheet-handle {
+    width: 44px;
+    height: 5px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 3px;
+    margin: 0 auto 16px;
+  }
+}
+
+@media (min-width: 601px) {
+  .sheet-handle { display: none; }
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.modal-title {
+  font-family: 'Comfortaa', cursive;
+  font-size: clamp(1.3rem, 4vw, 1.6rem);
+  color: var(--accent-gold);
+  margin-bottom: 4px;
+}
+
+.modal-desc {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.4;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #ffd68a;
+}
+
+/* 16px font-size to strictly prevent iOS Safari auto-zooming on input tap */
+.form-input, .form-textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px !important;
+  transition: all 0.25s;
+  outline: none;
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: #f72585;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0 10px rgba(247, 37, 133, 0.4);
+}
+
+.form-textarea {
+  min-height: 75px;
+  resize: vertical;
+}
+
+/* Preset Message Templates */
+.template-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.chip {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+  font-size: 0.76rem;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  touch-action: manipulation;
+}
+
+.chip:active, .chip:hover {
+  background: rgba(247, 37, 133, 0.35);
+  border-color: #f72585;
+  color: #fff;
+}
+
+.theme-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.theme-btn {
+  padding: 8px 4px;
+  font-size: 0.78rem;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  color: #fff;
+  text-align: center;
+  font-weight: 600;
+  transition: all 0.2s;
+  touch-action: manipulation;
+}
+
+.theme-btn[data-value="night"] { background: #0c1236; }
+.theme-btn[data-value="rose"] { background: #3b092f; }
+.theme-btn[data-value="cosmic"] { background: #200845; }
+.theme-btn[data-value="gold"] { background: #382404; }
+
+.theme-btn.active {
+  border-color: #ffd166;
+  transform: scale(1.04);
+  box-shadow: 0 0 10px rgba(255, 209, 102, 0.5);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  flex: 1;
+  background: var(--btn-primary);
+  border: none;
+  color: white;
+  padding: 13px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.25s;
+  touch-action: manipulation;
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-share {
+  background: var(--btn-gold);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: white;
+  padding: 13px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* Toast Notification (Mobile Optimized) */
+.toast {
+  position: fixed;
+  bottom: calc(24px + var(--safe-bottom));
+  left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(255, 209, 102, 0.6);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2000;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+  max-width: 90vw;
+  white-space: nowrap;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Gift Modal */
+.gift-modal-card {
+  text-align: center;
+}
+.gift-icon {
+  font-size: 3.5rem;
+  margin-bottom: 8px;
+  animation: bounce 1s infinite alternate;
+}
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px); }
+}
+
+@media (max-width: 600px) {
+  .nav-bar { padding: 0 12px; }
+  .glass-btn { padding: 7px 12px; font-size: 0.8rem; }
+  .modal-actions { flex-direction: column; }
+}
 </style>
 </head>
 <body>
-<div class="wrapper">
-  <div class="star-field" id="starField"></div>
- <div class="greeting greeting-main">Happy Birthday to Khulan</div>
-<div class="greeting greeting-name">Take care urself wish u luck ur love drama</div>
-  <div class="plate">
-    <div class="cake-wrap">
-      <div class="cake-topping">
-        <div class="topping-top">
-          <div class="candle-container">
-            <div class="star-deco"></div>
-            <div class="star-deco"></div>
-            <div class="star-deco"></div>
-            <div class="star-deco"></div>
-            <div class="star-deco"></div>
-            <div class="candle-wrap">
-              <div class="flame-wrap"></div>
-              <div class="candle-base">
-                <div class="candle-top"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="topping-front">
-          <div class="top-layer"></div>
-          <div class="bottom-layer"></div>
-        </div>
+
+<!-- Starry Sky Background -->
+<div class="star-field" id="starField"></div>
+
+<!-- Floating Balloons -->
+<div class="balloon-container" id="balloonContainer"></div>
+
+<!-- Top Navigation -->
+<nav class="nav-bar">
+  <div class="nav-group">
+    <button class="glass-btn" id="btnOpenModal" title="Өөрийн нэрээр мэндчилгээ үүсгэх">
+      ✏️ <span>Үүсгэх</span>
+    </button>
+  </div>
+  
+  <div class="nav-group">
+    <button class="glass-btn" id="btnShareCard" title="Найздаа илгээх холбоос хуваалцах">
+      🔗 <span>Хуваалцах</span>
+    </button>
+    <button class="glass-btn paused" id="btnMusicToggle" title="Хөгжим тоглуулах / түр зогсоох">
+      🎵 <span id="musicText">Ая</span>
+      <div class="music-bars">
+        <div class="music-bar"></div>
+        <div class="music-bar"></div>
+        <div class="music-bar"></div>
       </div>
-      <div class="cake-base">
-        <div class="base-front"></div>
-        <div class="base-top"></div>
-      </div>
+    </button>
+  </div>
+</nav>
+
+<!-- Audio Element -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="sad_version.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Main Stage -->
+<main class="main-stage">
+
+  <!-- Dramatic Lights Out & Countdown Overlay -->
+  <div class="lights-out-overlay" id="lightsOutOverlay">
+    <div class="countdown-container" id="countdownContainer">
+      <div class="countdown-hint" id="countdownHint">Хүслээ шивнээрэй... 💫</div>
+      <div class="countdown-number" id="countdownNumber">3</div>
     </div>
+  </div>
+  
+  <!-- Greeting Header -->
+  <div class="greeting-box">
+    <div class="greeting-sup" id="greetingSup">Төрсөн өдрийн баярын мэнд хүргэе</div>
+    <h1 class="greeting-name" id="displayGreetingName">Happy Birthday! 🎉</h1>
+    
+    <div class="message-card" id="messageCard">
+      <p class="greeting-text" id="displayGreetingText">Энэ хорвоод мэндэлсэн өдрийн баярын мэнд хүргэе! Үргэлж инээмсэглэлээр гэрэлтэж, хүсэл мөрөөдөл бүхэн чинь биелэх болтугай! ✨💖</p>
+      <span class="greeting-from" id="displayGreetingFrom">— Хайр шингээн илгээсэн найзаас нь</span>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MINIMALIST ELEGANT CAKE WITH 5 CANDLES
+       ========================================== -->
+  <div class="cake-stage" id="cakeStage" title="Лаан дээр дарж үлээгээрэй!">
+    <div class="cake-svg-wrapper">
+      <svg id="cakeSvg" viewBox="0 0 340 310" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Minimalist Plate Gradient -->
+          <linearGradient id="minimalPlateGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="70%" stop-color="#f1f5f9"/>
+            <stop offset="100%" stop-color="#cbd5e1"/>
+          </linearGradient>
+
+          <!-- Minimalist Cake Body Gradient (Warm Pastel Cream) -->
+          <linearGradient id="minimalCakeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#fce7f3"/>
+            <stop offset="35%" stop-color="#fff1f2"/>
+            <stop offset="75%" stop-color="#fde2e4"/>
+            <stop offset="100%" stop-color="#f9bec7"/>
+          </linearGradient>
+
+          <!-- Minimalist Cake Top Frosting -->
+          <linearGradient id="minimalCakeTopGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#fff0f3"/>
+          </linearGradient>
+
+          <!-- Golden/Pastel Slender Candle Gradient -->
+          <linearGradient id="candleStickGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ffd166"/>
+            <stop offset="50%" stop-color="#fffbeb"/>
+            <stop offset="100%" stop-color="#f59e0b"/>
+          </linearGradient>
+
+          <!-- Flame Gradients -->
+          <radialGradient id="flameOuter" cx="50%" cy="60%" r="50%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="35%" stop-color="#ffea00"/>
+            <stop offset="70%" stop-color="#ff7b00"/>
+            <stop offset="100%" stop-color="#e63946"/>
+          </radialGradient>
+          <radialGradient id="flameAura" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(255, 230, 100, 0.8)"/>
+            <stop offset="50%" stop-color="rgba(255, 150, 0, 0.35)"/>
+            <stop offset="100%" stop-color="rgba(255, 100, 0, 0)"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Soft Drop Shadow Under Plate -->
+        <ellipse cx="170" cy="272" rx="122" ry="14" fill="rgba(0,0,0,0.3)"/>
+
+        <!-- Minimalist Ceramic Plate -->
+        <g id="svgPlate">
+          <ellipse cx="170" cy="260" rx="126" ry="18" fill="url(#minimalPlateGrad)"/>
+          <ellipse cx="170" cy="258" rx="118" ry="14" fill="#ffffff"/>
+        </g>
+
+        <!-- Minimalist Cake Cylinder -->
+        <g id="svgCakeBody">
+          <!-- Cake Base Body -->
+          <path d="M85 165 C85 190 255 190 255 165 L255 236 C255 261 85 261 85 236 Z" fill="url(#minimalCakeGrad)"/>
+          <!-- Subtle Frosted Highlight -->
+          <path d="M85 165 L85 236 C105 246 130 249 135 249 L135 174 C130 174 105 171 85 165 Z" fill="#ffffff" opacity="0.15"/>
+          <!-- Cake Top Ellipse -->
+          <ellipse cx="170" cy="165" rx="85" ry="22" fill="url(#minimalCakeTopGrad)"/>
+          <!-- Clean Minimal Frosting Rim -->
+          <path d="M85 165 C95 171 105 171 115 166 C125 161 135 161 145 167 C155 173 165 173 175 167 C185 161 195 161 205 166 C215 171 225 171 235 166 C245 161 250 162 255 165 C255 168 85 168 85 165 Z" fill="#ffffff" opacity="0.85"/>
+        </g>
+
+        <!-- ================= 5 ELEGANT CANDLES & FLAMES ================= -->
+        <g id="svgCandlesContainer">
+          
+          <!-- CANDLE 1 (Leftmost) -->
+          <g id="candleGroup1">
+            <rect class="candle-stick" x="110" y="102" width="4" height="58" rx="2" fill="url(#candleStickGrad)"/>
+            <line x1="112" y1="102" x2="112" y2="94" stroke="#4a4e69" stroke-width="1.8" stroke-linecap="round"/>
+            <circle class="candle-aura aura-1" cx="112" cy="78" r="20" fill="url(#flameAura)"/>
+            <g class="candle-flame flame-1">
+              <path d="M112 64 C116 72 118 78 115 84 C113 88 109 88 107 84 C104 78 106 72 112 64 Z" fill="url(#flameOuter)"/>
+              <path d="M112 71 C115 76 116 79 114 83 C113 85 111 85 110 83 C108 79 109 76 112 71 Z" fill="#ffffff" opacity="0.95"/>
+              <ellipse cx="112" cy="86" rx="2" ry="1.2" fill="#00b4d8" opacity="0.8"/>
+            </g>
+            <g class="candle-smoke smoke-1" style="transform-origin: 112px 90px;">
+              <circle cx="112" cy="90" r="3" fill="rgba(255,255,255,0.7)"/>
+              <circle cx="110" cy="80" r="5" fill="rgba(220,220,220,0.5)"/>
+              <circle cx="114" cy="68" r="7" fill="rgba(200,200,200,0.3)"/>
+            </g>
+          </g>
+
+          <!-- CANDLE 2 (Center-Left) -->
+          <g id="candleGroup2">
+            <rect class="candle-stick" x="139" y="96" width="4" height="72" rx="2" fill="url(#candleStickGrad)"/>
+            <line x1="141" y1="96" x2="141" y2="88" stroke="#4a4e69" stroke-width="1.8" stroke-linecap="round"/>
+            <circle class="candle-aura aura-2" cx="141" cy="72" r="22" fill="url(#flameAura)"/>
+            <g class="candle-flame flame-2">
+              <path d="M141 58 C145 66 147 72 144 78 C142 82 138 82 136 78 C133 72 135 66 141 58 Z" fill="url(#flameOuter)"/>
+              <path d="M141 65 C144 70 145 73 143 77 C142 79 140 79 139 77 C137 73 138 70 141 65 Z" fill="#ffffff" opacity="0.95"/>
+              <ellipse cx="141" cy="80" rx="2" ry="1.2" fill="#00b4d8" opacity="0.8"/>
+            </g>
+            <g class="candle-smoke smoke-2" style="transform-origin: 141px 84px;">
+              <circle cx="141" cy="84" r="3" fill="rgba(255,255,255,0.7)"/>
+              <circle cx="139" cy="74" r="5" fill="rgba(220,220,220,0.5)"/>
+              <circle cx="143" cy="62" r="7" fill="rgba(200,200,200,0.3)"/>
+            </g>
+          </g>
+
+          <!-- CANDLE 3 (Center) -->
+          <g id="candleGroup3">
+            <rect class="candle-stick" x="168" y="92" width="4" height="80" rx="2" fill="url(#candleStickGrad)"/>
+            <line x1="170" y1="92" x2="170" y2="84" stroke="#4a4e69" stroke-width="1.8" stroke-linecap="round"/>
+            <circle class="candle-aura aura-3" cx="170" cy="68" r="24" fill="url(#flameAura)"/>
+            <g class="candle-flame flame-3">
+              <path d="M170 54 C174 62 176 68 173 74 C171 78 167 78 165 74 C162 68 164 62 170 54 Z" fill="url(#flameOuter)"/>
+              <path d="M170 61 C173 66 174 69 172 73 C171 75 169 75 168 73 C166 69 167 66 170 61 Z" fill="#ffffff" opacity="0.95"/>
+              <ellipse cx="170" cy="76" rx="2.2" ry="1.3" fill="#00b4d8" opacity="0.8"/>
+            </g>
+            <g class="candle-smoke smoke-3" style="transform-origin: 170px 80px;">
+              <circle cx="170" cy="80" r="3" fill="rgba(255,255,255,0.7)"/>
+              <circle cx="168" cy="70" r="5" fill="rgba(220,220,220,0.5)"/>
+              <circle cx="172" cy="58" r="7" fill="rgba(200,200,200,0.3)"/>
+            </g>
+          </g>
+
+          <!-- CANDLE 4 (Center-Right) -->
+          <g id="candleGroup4">
+            <rect class="candle-stick" x="197" y="96" width="4" height="72" rx="2" fill="url(#candleStickGrad)"/>
+            <line x1="199" y1="96" x2="199" y2="88" stroke="#4a4e69" stroke-width="1.8" stroke-linecap="round"/>
+            <circle class="candle-aura aura-4" cx="199" cy="72" r="22" fill="url(#flameAura)"/>
+            <g class="candle-flame flame-4">
+              <path d="M199 58 C203 66 205 72 202 78 C200 82 196 82 194 78 C191 72 193 66 199 58 Z" fill="url(#flameOuter)"/>
+              <path d="M199 65 C202 70 203 73 201 77 C200 79 198 79 197 77 C195 73 196 70 199 65 Z" fill="#ffffff" opacity="0.95"/>
+              <ellipse cx="199" cy="80" rx="2" ry="1.2" fill="#00b4d8" opacity="0.8"/>
+            </g>
+            <g class="candle-smoke smoke-4" style="transform-origin: 199px 84px;">
+              <circle cx="199" cy="84" r="3" fill="rgba(255,255,255,0.7)"/>
+              <circle cx="197" cy="74" r="5" fill="rgba(220,220,220,0.5)"/>
+              <circle cx="201" cy="62" r="7" fill="rgba(200,200,200,0.3)"/>
+            </g>
+          </g>
+
+          <!-- CANDLE 5 (Rightmost) -->
+          <g id="candleGroup5">
+            <rect class="candle-stick" x="226" y="102" width="4" height="58" rx="2" fill="url(#candleStickGrad)"/>
+            <line x1="228" y1="102" x2="228" y2="94" stroke="#4a4e69" stroke-width="1.8" stroke-linecap="round"/>
+            <circle class="candle-aura aura-5" cx="228" cy="78" r="20" fill="url(#flameAura)"/>
+            <g class="candle-flame flame-5">
+              <path d="M228 64 C232 72 234 78 231 84 C229 88 225 88 223 84 C220 78 222 72 228 64 Z" fill="url(#flameOuter)"/>
+              <path d="M228 71 C231 76 232 79 230 83 C229 85 227 85 226 83 C224 79 225 76 228 71 Z" fill="#ffffff" opacity="0.95"/>
+              <ellipse cx="228" cy="86" rx="2" ry="1.2" fill="#00b4d8" opacity="0.8"/>
+            </g>
+            <g class="candle-smoke smoke-5" style="transform-origin: 228px 90px;">
+              <circle cx="228" cy="90" r="3" fill="rgba(255,255,255,0.7)"/>
+              <circle cx="226" cy="80" r="5" fill="rgba(220,220,220,0.5)"/>
+              <circle cx="230" cy="68" r="7" fill="rgba(200,200,200,0.3)"/>
+            </g>
+          </g>
+
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Interactive Controls under Cake -->
+  <div class="action-box">
+    <button class="blow-btn" id="btnBlowCandle">
+      🎂 <span id="blowBtnText">Лаагаа үлээж хүслээ шивнээрэй!</span>
+    </button>
+    
+    <div class="wish-granted-banner" id="wishBanner">
+      ✨ Таны шивнэсэн бүх хүсэл заавал биелэх болтугай! 🌟✨
+    </div>
+
+    <div class="surprise-row">
+      <button class="glass-btn" id="btnPopConfetti">
+        🎉 <span>Баярын салют</span>
+      </button>
+      <button class="glass-btn" id="btnOpenGift">
+        🎁 <span>Бэлэг задлах</span>
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<!-- ==============================================================
+     MODAL: CUSTOMIZE GREETING & INPUT (Mobile Bottom-Sheet)
+     ============================================================== -->
+<div class="modal-overlay" id="configModal">
+  <div class="modal-card">
+    <div class="sheet-handle"></div>
+    <div class="modal-header">
+      <h2 class="modal-title">✨ Мэндчилгээг тохируулах ✨</h2>
+      <p class="modal-desc">Нэр болон хүслээ оруулаад найздаа илгээх тусгай холбоос үүсгээрэй!</p>
+    </div>
+
+    <form id="greetingForm" onsubmit="event.preventDefault(); applyCustomGreeting();">
+      <!-- Recipient Name -->
+      <div class="form-group">
+        <label class="form-label" for="inputName">👤 Хүлээн авагчийн нэр:</label>
+        <input type="text" id="inputName" class="form-input" placeholder="Жишээ: Хулан, Тэмүүлэн..." required>
+      </div>
+
+      <!-- Personalized Message -->
+      <div class="form-group">
+        <label class="form-label" for="inputMsg">💌 Сэтгэлийн үг / Мэндчилгээ:</label>
+        <textarea id="inputMsg" class="form-textarea" placeholder="Хүсэл ерөөлийн сайхан үгээ бичнэ үү..."></textarea>
+        
+        <!-- Quick Preset Chips -->
+        <div class="template-chips">
+          <button type="button" class="chip" onclick="applyTemplate('friend')">👯‍♀️ Найздаа</button>
+          <button type="button" class="chip" onclick="applyTemplate('love')">💖 Хайртдаа</button>
+          <button type="button" class="chip" onclick="applyTemplate('success')">🌟 Амжилт</button>
+          <button type="button" class="chip" onclick="applyTemplate('funny')">😜 Хөгжилтэй</button>
+        </div>
+      </div>
+
+      <!-- Sender Name -->
+      <div class="form-group">
+        <label class="form-label" for="inputFrom">🎁 Илгээгч (Хэнээс):</label>
+        <input type="text" id="inputFrom" class="form-input" placeholder="Жишээ: Хайртай найзаас нь...">
+      </div>
+
+      <!-- Theme Selector -->
+      <div class="form-group">
+        <label class="form-label">🎨 Өнгөний сонголт (Theme):</label>
+        <div class="theme-options">
+          <div class="theme-btn active" data-value="night" onclick="selectTheme('night')">Шөнө 🌌</div>
+          <div class="theme-btn" data-value="rose" onclick="selectTheme('rose')">Сарнай 🌸</div>
+          <div class="theme-btn" data-value="cosmic" onclick="selectTheme('cosmic')">Сансар 🔮</div>
+          <div class="theme-btn" data-value="gold" onclick="selectTheme('gold')">Алтлаг ✨</div>
+        </div>
+      </div>
+
+      <!-- Modal Actions -->
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" onclick="closeModal()">Хаах</button>
+        <button type="submit" class="btn-primary">🎉 Үзэх</button>
+        <button type="button" class="btn-primary btn-share" onclick="shareGreeting()">🔗 Хуваалцах</button>
+      </div>
+    </form>
   </div>
 </div>
 
-<svg class="svg">
-  <clipPath id="my-clip-path" clipPathUnits="objectBoundingBox">
-    <path d="M0,0 V0.481 s0.021,0.37,0.078,0.404 s0.035,-0.296,0.102,-0.27 s0.007,0.363,0.096,0.354 s0.028,-0.466,0.1,-0.487 S0.406,0.999,0.457,0.999 s0.03,-0.502,0.075,-0.518 s0.041,0.488,0.081,0.274 c0.007,-0.038,0.021,-0.187,0.044,-0.215 c0.014,-0.017,0.038,0.401,0.075,0.392 s0.023,-0.28,0.074,-0.392 c0.022,-0.04,0.072,0.359,0.1,0.344 c0.057,-0.029,0.094,-0.405,0.094,-0.405 V-0.001"></path>
-  </clipPath>
-  <clipPath id="my-flame-path" clipPathUnits="objectBoundingBox">
-    <path d="M0.501,0 s0.188,0.101,0.295,0.238 s0.123,0.15,0.169,0.286 S1,0.74,0.928,0.838 S0.711,1,0.501,1 S0.216,0.937,0.09,0.838 s-0.083,-0.149,0,-0.29 s0.23,-0.139,0.333,-0.276 S0.501,0,0.501,0"></path>
-  </clipPath>
-  <clipPath id="my-star-path" clipPathUnits="objectBoundingBox">
-    <path d="M0.5,0.846 l-0.309,0.154,0.044,-0.357 L0,0.382 l0.336,-0.067 L0.5,0 l0.164,0.315,0.336,0.067,-0.235,0.261,0.044,0.357"></path>
-  </clipPath>
-</svg>
-  
+<!-- Modal: Surprise Gift Box -->
+<div class="modal-overlay" id="giftModal">
+  <div class="modal-card gift-modal-card">
+    <div class="sheet-handle"></div>
+    <div class="gift-icon">🎁</div>
+    <h2 class="modal-title" style="color: #ffd166;">Таны төрсөн өдрийн бэлэг!</h2>
+    <p class="greeting-text" id="giftMessage" style="margin: 14px 0; font-size: 1.15rem;">
+      🌟 "Эрүүл энх, аз жаргал, хайр дурлал, амжилт бүтээлээр үргэлж бялхаж явахыг хүсэн ерөөе! Бүх сайхан хүсэл тань зөв цагтаа биелэх болно."
+    </p>
+    <button class="btn-primary" style="margin: 0 auto; width: auto; padding: 12px 28px;" onclick="closeGiftModal()">Баярлалаа! ❤️</button>
+  </div>
+</div>
+
+<!-- Toast Popup Notification -->
+<div class="toast" id="toast">
+  <span id="toastIcon">✨</span>
+  <span id="toastText">Холбоос хуулагдлаа!</span>
+</div>
+
 <script>
-const field = document.getElementById('starField');
-for (let i = 0; i < 100; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  s.style.left = Math.random() * 100 + '%';
-  s.style.top = Math.random() * 100 + '%';
-  s.style.animationDelay = Math.random() * 3 + 's';
-  field.appendChild(s);
+// --- State & Configuration ---
+let isCandleLit = true;
+let isMusicPlaying = false;
+let currentTheme = 'night';
+let celebrationTimeline = null;
+
+const audio = document.getElementById('bgMusic');
+
+// Preset templates for quick selection
+const templates = {
+  friend: "Энэ хорвоод мэндэлсэн өдрийн баярын мэнд хүргэе! Үргэлж инээмсэглэлээр гэрэлтэж, хүсэл мөрөөдөл бүхэн чинь биелэх болтугай! ✨💖",
+  love: "Миний ертөнцийн хамгийн тод оч болсон чамдаа төрсөн өдрийн халуун мэндийг хүргэе. Үргэлж хамтдаа инээмсэглэж яваарай! 🌹❤️",
+  success: "Төрсөн өдрийн гал халуун мэнд хүргэе! Ирээдүйн бүх зорилго, хүсэл тэмүүлэл нь сүндэрлэн биелж, эрүүл энх байхыг ерөөе! 🌟🥂",
+  funny: "Нэг насаар хөгширч байгаад нь баяр хүргэе! Гэхдээ битгий санаа зов, чи хэзээд миний харсан хамгийн хөөрхөн нь шүү! 🥳🎂"
+};
+
+const fortuneGifts = [
+  "🌟 Энэ онд таны амьдралд хамгийн том гайхамшиг, гэнэтийн сайхан мөчүүд тохиох болно!",
+  "💫 Танд эрүүл энх, эрч хүч, хязгааргүй аз жаргал, үнэнч хайрыг хүсэн ерөөе!",
+  "🍀 Таны эхлүүлсэн ажил, зорьсон зорилго бүхэн амжилт бүтээлээр бялхах болтугай!",
+  "💖 Үргэлж гэрэл цацруулж, бусдад баяр баясгалан бэлэглэдэг тандаа баярлалаа!"
+];
+
+// --- Star Field Generation ---
+function initStarField() {
+  const field = document.getElementById('starField');
+  field.innerHTML = '';
+  const count = window.innerWidth < 600 ? 50 : 100;
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.animationDelay = (Math.random() * 3) + 's';
+    s.style.animationDuration = (2 + Math.random() * 3) + 's';
+    field.appendChild(s);
+  }
 }
 
-const tl = gsap.timeline({ duration: 0.3 });
-tl.fromTo('.cake-topping', 
-  { yPercent: -300, opacity: 0.5 }, 
-  { yPercent: 0, opacity: 1, duration: 2, ease: "power2.out" } // <-- нэмсэн хэсэг
-)
-  .to('.candle-container', { opacity: 1, duration: 0.8 })
-  .to('.flame-wrap', { scale: 1, ease: "back.out", duration: 0.6 })
-  .to('.greeting-main', { opacity: 1, scale: 1, ease: "back.out", duration: 1 })
-  .to('.greeting-name', { opacity: 1, scale: 1, ease: "back.out", duration: 1 }, "+=0.6")
-  .to('.star-deco', {
-    opacity: 0.6,
-    stagger: 0.1,
-    onComplete: function(){
-      gsap.to('.star-deco', { scale: 0.4, repeat: -1, yoyo: true, duration: 1.5, yoyoEase: "power1.out" });
+// --- Floating Balloons ---
+const balloonColors = ['#ff4d6d', '#ff758f', '#a78bfa', '#38bdf8', '#fbbf24', '#34d399', '#f472b6'];
+
+function spawnBalloon() {
+  const container = document.getElementById('balloonContainer');
+  if (container.children.length > 10) return;
+
+  const b = document.createElement('div');
+  b.className = 'balloon';
+  const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+  b.style.backgroundColor = color;
+  b.style.color = color;
+  b.style.left = (Math.random() * 88 + 6) + '%';
+  
+  const duration = 12 + Math.random() * 8;
+  b.style.animationDuration = duration + 's';
+  b.style.transform = `scale(${0.7 + Math.random() * 0.45})`;
+
+  // Click / tap to pop balloon with sound & mini confetti
+  const popHandler = (e) => {
+    e.stopPropagation();
+    playPopSound();
+    const rect = b.getBoundingClientRect();
+    confetti({
+      particleCount: 22,
+      spread: 55,
+      origin: { 
+        x: (rect.left + rect.width / 2) / window.innerWidth, 
+        y: (rect.top + rect.height / 2) / window.innerHeight 
+      },
+      colors: [color, '#ffffff', '#ffd700']
+    });
+    b.remove();
+  };
+
+  b.addEventListener('click', popHandler);
+  b.addEventListener('animationend', () => b.remove());
+  container.appendChild(b);
+}
+
+setInterval(spawnBalloon, 2400);
+
+// --- Synthesizer Sound Effects (Web Audio API) ---
+function getAudioContext() {
+  return window.AudioContext || window.webkitAudioContext;
+}
+
+function playPopSound() {
+  try {
+    const AudioCtx = getAudioContext();
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(420, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(70, ctx.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.1);
+  } catch (e) {}
+}
+
+function playMagicalChime() {
+  try {
+    const AudioCtx = getAudioContext();
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 arpeggio
+    notes.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.2, ctx.currentTime + idx * 0.09);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.09 + 0.45);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + idx * 0.09);
+      osc.stop(ctx.currentTime + idx * 0.09 + 0.45);
+    });
+  } catch (e) {}
+}
+
+// --- GSAP Entrance Animation ---
+function playCelebrationTimeline() {
+  if (celebrationTimeline) {
+    celebrationTimeline.kill();
+  }
+
+  // Reset elements
+  gsap.set('#svgPlate', { opacity: 0, scale: 0.85, transformOrigin: '170px 260px' });
+  gsap.set('#svgCakeBody', { opacity: 0, y: -50 });
+  gsap.set('.candle-stick', { scaleY: 0, transformOrigin: 'bottom center' });
+  gsap.set('.candle-flame', { scale: 0, opacity: 0 });
+  gsap.set('.candle-aura', { scale: 0, opacity: 0 });
+  gsap.set('.greeting-sup', { opacity: 0, y: -12 });
+  gsap.set('.greeting-name', { opacity: 0, scale: 0.85 });
+  gsap.set('.message-card', { opacity: 0, y: 20 });
+
+  celebrationTimeline = gsap.timeline({ defaults: { ease: 'power2.out' } });
+
+  celebrationTimeline
+    .to('.greeting-sup', { opacity: 1, y: 0, duration: 0.7 })
+    .to('.greeting-name', { opacity: 1, scale: 1, duration: 0.9, ease: 'back.out(1.6)' }, '-=0.4')
+    .to('.message-card', { opacity: 1, y: 0, duration: 0.8 }, '-=0.5')
+    .to('#svgPlate', { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.4)' }, '-=0.3')
+    .to('#svgCakeBody', { opacity: 1, y: 0, duration: 0.9, ease: 'bounce.out' }, '-=0.2')
+    .to('.candle-stick', { scaleY: 1, duration: 0.5, stagger: 0.06, ease: 'back.out(1.8)' }, '-=0.3')
+    .to('.candle-flame', { 
+      scale: 1, 
+      opacity: 1, 
+      duration: 0.5, 
+      stagger: 0.08, 
+      ease: 'back.out(2)',
+      onComplete: () => {
+        isCandleLit = true;
+        document.querySelectorAll('.candle-flame').forEach(f => f.style.display = 'block');
+        document.querySelectorAll('.candle-aura').forEach(a => a.style.display = 'block');
+        document.getElementById('blowBtnText').innerText = 'Лаагаа үлээж хүслээ шивнээрэй!';
+      }
+    }, '-=0.2')
+    .to('.candle-aura', { scale: 1, opacity: 1, duration: 0.5, stagger: 0.08 }, '-=0.4');
+
+  // Initial welcome confetti burst
+  setTimeout(() => {
+    confetti({
+      particleCount: 45,
+      spread: 60,
+      origin: { y: 0.65 }
+    });
+  }, 1600);
+}
+
+// --- Additional Synthesizer Sound Effects (Countdown, Whoosh, Triumph) ---
+function playCountdownBeep(freq = 600) {
+  try {
+    const AudioCtx = getAudioContext();
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    gain.gain.setValueAtTime(0.25, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.35);
+  } catch (e) {}
+}
+
+function playBlowWhoosh() {
+  try {
+    const AudioCtx = getAudioContext();
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const bufferSize = ctx.sampleRate * 0.45;
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.15));
     }
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(500, ctx.currentTime);
+    filter.frequency.linearRampToValueAtTime(120, ctx.currentTime + 0.45);
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.4, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.45);
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+    noise.start();
+  } catch (e) {}
+}
+
+function playTriumphantChime() {
+  try {
+    const AudioCtx = getAudioContext();
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const notes = [523.25, 659.25, 783.99, 987.77, 1046.50]; // C5, E5, G5, B5, C6
+    notes.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.25, ctx.currentTime + idx * 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.08 + 0.55);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + idx * 0.08);
+      osc.stop(ctx.currentTime + idx * 0.08 + 0.55);
+    });
+  } catch (e) {}
+}
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function animateCountdownNumber(el) {
+  gsap.fromTo(el, 
+    { scale: 1.7, opacity: 0 }, 
+    { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2)' }
+  );
+}
+
+// --- Cinematic Candle Blow Out Sequence (Lights Out -> 3, 2, 1 -> Blow -> Lights On!) ---
+let isBlowingSequenceRunning = false;
+
+async function handleBlowCandle() {
+  if (isBlowingSequenceRunning) return;
+
+  const btn = document.getElementById('btnBlowCandle');
+  const banner = document.getElementById('wishBanner');
+  const flames = document.querySelectorAll('.candle-flame');
+  const auras = document.querySelectorAll('.candle-aura');
+  const smokes = document.querySelectorAll('.candle-smoke');
+
+  if (isCandleLit) {
+    isBlowingSequenceRunning = true;
+    btn.disabled = true;
+
+    // 1. Lights out! Dim room and spotlight cake
+    const overlay = document.getElementById('lightsOutOverlay');
+    const cakeStage = document.getElementById('cakeStage');
+    const greetingBox = document.querySelector('.greeting-box');
+    const actionBox = document.querySelector('.action-box');
+    const navBar = document.querySelector('.nav-bar');
+    const countNumber = document.getElementById('countdownNumber');
+    const countHint = document.getElementById('countdownHint');
+
+    overlay.classList.add('active');
+    cakeStage.classList.add('spotlight');
+    greetingBox.classList.add('dimmed');
+    actionBox.classList.add('dimmed');
+    navBar.classList.add('dimmed');
+
+    // Wait for room to dim
+    await wait(600);
+
+    // 2. Countdown 3, 2, 1
+    countHint.innerText = 'Хүслээ шивнээрэй... 💫';
+    
+    // Count 3
+    countNumber.innerText = '3';
+    playCountdownBeep(587.33); // D5
+    animateCountdownNumber(countNumber);
+    await wait(950);
+
+    // Count 2
+    countNumber.innerText = '2';
+    playCountdownBeep(659.25); // E5
+    animateCountdownNumber(countNumber);
+    await wait(950);
+
+    // Count 1
+    countNumber.innerText = '1';
+    playCountdownBeep(783.99); // G5
+    animateCountdownNumber(countNumber);
+    await wait(950);
+
+    // Blow action!
+    countHint.innerText = 'Үлээлээ! 💨';
+    countNumber.innerText = '✨';
+    animateCountdownNumber(countNumber);
+    playBlowWhoosh();
+
+    // 3. Extinguish all 5 candle flames
+    isCandleLit = false;
+    gsap.to([...flames, ...auras], {
+      scale: 0,
+      opacity: 0,
+      duration: 0.25,
+      stagger: 0.03,
+      ease: 'power2.in',
+      onComplete: () => {
+        flames.forEach(f => f.style.display = 'none');
+        auras.forEach(a => a.style.display = 'none');
+      }
+    });
+
+    // Smoke puffs rise in the spotlighted darkness
+    gsap.fromTo(smokes, 
+      { opacity: 0.95, scale: 0.4, y: 0 }, 
+      { opacity: 0, scale: 2.2, y: -40, duration: 1.4, stagger: 0.04, ease: 'power1.out' }
+    );
+
+    await wait(750);
+
+    // 4. Lights back on & view restored!
+    overlay.classList.remove('active');
+    cakeStage.classList.remove('spotlight');
+    greetingBox.classList.remove('dimmed');
+    actionBox.classList.remove('dimmed');
+    navBar.classList.remove('dimmed');
+
+    banner.style.display = 'block';
+    document.getElementById('blowBtnText').innerText = 'Лаагаа дахин асаах 🕯️';
+
+    // Celebration fireworks & triumph sound
+    playTriumphantChime();
+    launchMegaCelebration();
+    showToast('🌟 Таны шивнэсэн бүх хүсэл заавал биелнэ!');
+
+    btn.disabled = false;
+    isBlowingSequenceRunning = false;
+  } else {
+    // Relight all 5 candles immediately
+    isCandleLit = true;
+    flames.forEach(f => f.style.display = 'block');
+    auras.forEach(a => a.style.display = 'block');
+    banner.style.display = 'none';
+    document.getElementById('blowBtnText').innerText = 'Лаагаа үлээж хүслээ шивнээрэй!';
+
+    gsap.fromTo([...flames, ...auras], 
+      { scale: 0, opacity: 0 }, 
+      { scale: 1, opacity: 1, duration: 0.45, stagger: 0.06, ease: 'back.out(2)' }
+    );
+    showToast('🕯️ 5 лаа бүгд аслаа!');
+  }
+}
+
+// Massive confetti explosion
+function launchMegaCelebration() {
+  const count = 180;
+  const defaults = { origin: { y: 0.7 } };
+
+  function fire(particleRatio, opts) {
+    confetti(Object.assign({}, defaults, opts, {
+      particleCount: Math.floor(count * particleRatio)
+    }));
+  }
+
+  fire(0.25, { spread: 26, startVelocity: 55 });
+  fire(0.2, { spread: 60 });
+  fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+  fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+  fire(0.1, { spread: 120, startVelocity: 45 });
+}
+
+// --- Music Controls ---
+function toggleMusic() {
+  const btn = document.getElementById('btnMusicToggle');
+  const txt = document.getElementById('musicText');
+
+  if (audio.paused) {
+    audio.play().then(() => {
+      isMusicPlaying = true;
+      btn.classList.remove('paused');
+      btn.classList.add('active');
+      txt.innerText = 'Зогсоох';
+      showToast('🎵 Хөгжим тоглуулж байна');
+    }).catch(err => {
+      showToast('⚠️ Дэлгэц дээр нэг дарж аяыг тоглуулна уу');
+    });
+  } else {
+    audio.pause();
+    isMusicPlaying = false;
+    btn.classList.add('paused');
+    btn.classList.remove('active');
+    txt.innerText = 'Ая';
+    showToast('⏸️ Хөгжим түр зогслоо');
+  }
+}
+
+// --- Theme Selection ---
+function selectTheme(theme) {
+  currentTheme = theme;
+  document.body.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-value') === theme);
+  });
+}
+
+// --- Template Selector in Modal ---
+function applyTemplate(key) {
+  if (templates[key]) {
+    document.getElementById('inputMsg').value = templates[key];
+  }
+}
+
+// --- Modal Management ---
+function openModal() {
+  document.getElementById('configModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('configModal').classList.remove('open');
+}
+
+function openGiftModal() {
+  const msgEl = document.getElementById('giftMessage');
+  const randomMsg = fortuneGifts[Math.floor(Math.random() * fortuneGifts.length)];
+  msgEl.innerText = randomMsg;
+  document.getElementById('giftModal').classList.add('open');
+  playMagicalChime();
+  confetti({ particleCount: 50, spread: 70, origin: { y: 0.5 } });
+}
+
+function closeGiftModal() {
+  document.getElementById('giftModal').classList.remove('open');
+}
+
+// --- Apply Custom Greeting from Modal ---
+function applyCustomGreeting() {
+  const nameInput = document.getElementById('inputName').value.trim() || 'найз';
+  const msgInput = document.getElementById('inputMsg').value.trim() || templates.friend;
+  const fromInput = document.getElementById('inputFrom').value.trim() || 'Найзаас нь';
+
+  updateCardContent(nameInput, msgInput, fromInput, currentTheme);
+  closeModal();
+
+  // Try to start music on form submission touch
+  if (audio.paused && !isMusicPlaying) {
+    toggleMusic();
+  }
+
+  playCelebrationTimeline();
+  showToast(`🎉 ${nameInput}-д зориулсан мэндчилгээ бэлэн боллоо!`);
+}
+
+function updateCardContent(name, msg, from, theme) {
+  document.getElementById('displayGreetingName').innerText = `Happy Birthday, ${name}! 🎉`;
+  document.getElementById('displayGreetingText').innerText = msg;
+  document.getElementById('displayGreetingFrom').innerText = `— Хайр шингээн илгээсэн: ${from}`;
+  document.title = `🎉 Төрсөн өдрийн мэнд хүргэе, ${name}!`;
+
+  if (theme) selectTheme(theme);
+
+  // Sync inputs
+  document.getElementById('inputName').value = name;
+  document.getElementById('inputMsg').value = msg;
+  document.getElementById('inputFrom').value = from;
+}
+
+// --- Shareable URL Builder ---
+function getShareableUrl() {
+  const name = document.getElementById('inputName').value.trim() || 'найз';
+  const msg = document.getElementById('inputMsg').value.trim() || templates.friend;
+  const from = document.getElementById('inputFrom').value.trim() || 'Найзаас нь';
+  const theme = currentTheme;
+
+  const url = new URL(window.location.href);
+  url.searchParams.set('name', name);
+  url.searchParams.set('msg', msg);
+  url.searchParams.set('from', from);
+  url.searchParams.set('theme', theme);
+
+  return url.toString();
+}
+
+// --- Native Mobile Web Share API & Clipboard Fallback ---
+async function shareGreeting() {
+  const shareUrl = getShareableUrl();
+  const name = document.getElementById('inputName').value.trim() || 'найз';
+
+  const shareData = {
+    title: `Төрсөн өдрийн мэнд хүргэе, ${name}! 🎂`,
+    text: `Танд зориулсан онцгой төрсөн өдрийн интерактив мэндчилгээ ирлээ! ✨`,
+    url: shareUrl
+  };
+
+  // If mobile supports Web Share API (Messenger, Telegram, WhatsApp, Instagram direct)
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+      showToast('Амжилттай хуваалцлаа! 🎉');
+      return;
+    } catch (err) {
+      // User cancelled share sheet or fallback
+      if (err.name !== 'AbortError') {
+        copyToClipboard(shareUrl);
+      }
+    }
+  } else {
+    copyToClipboard(shareUrl);
+  }
+}
+
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('📋 Холбоос хуулагдлаа! Найз руугаа илгээгээрэй 💌');
+    }).catch(() => {
+      prompt('Холбоосыг хуулж авна уу:', text);
+    });
+  } else {
+    prompt('Холбоосыг хуулж авна уу:', text);
+  }
+}
+
+// --- Toast helper ---
+let toastTimeout;
+function showToast(text, icon = '✨') {
+  const toast = document.getElementById('toast');
+  const toastText = document.getElementById('toastText');
+  const toastIcon = document.getElementById('toastIcon');
+
+  toastText.innerText = text;
+  toastIcon.innerText = icon;
+  toast.classList.add('show');
+
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+// --- URL Parameter Initialization ---
+function initFromUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get('name');
+  const msg = params.get('msg');
+  const from = params.get('from');
+  const theme = params.get('theme');
+
+  if (name) {
+    // Direct customized card opened!
+    updateCardContent(name, msg || templates.friend, from || 'Найзаас нь', theme || 'night');
+  } else {
+    // Default starter
+    updateCardContent('...', templates.friend, 'Найзаас нь', 'night');
+  }
+  playCelebrationTimeline();
+}
+
+// --- Event Listeners ---
+document.addEventListener('DOMContentLoaded', () => {
+  initStarField();
+  for (let i = 0; i < 4; i++) spawnBalloon();
+
+  initFromUrlParams();
+
+  // Attach button events
+  document.getElementById('btnOpenModal').addEventListener('click', openModal);
+  document.getElementById('btnShareCard').addEventListener('click', shareGreeting);
+  document.getElementById('btnMusicToggle').addEventListener('click', toggleMusic);
+  document.getElementById('btnBlowCandle').addEventListener('click', handleBlowCandle);
+  document.getElementById('cakeStage').addEventListener('click', handleBlowCandle);
+  document.getElementById('btnPopConfetti').addEventListener('click', launchMegaCelebration);
+  document.getElementById('btnOpenGift').addEventListener('click', openGiftModal);
+
+  // Close modals on clicking overlay background
+  document.getElementById('configModal').addEventListener('click', (e) => {
+    if (e.target.id === 'configModal') closeModal();
+  });
+  document.getElementById('giftModal').addEventListener('click', (e) => {
+    if (e.target.id === 'giftModal') closeGiftModal();
   });
 
+  // Re-init stars on resize
+  window.addEventListener('resize', initStarField);
+});
 </script>
 
 </body>
