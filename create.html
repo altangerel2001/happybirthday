@@ -528,11 +528,59 @@ body {
 .font-sample-handwriting { font-family: 'Caveat', cursive; font-size: 1.35rem !important; }
 .font-sample-nunito { font-family: 'Nunito', sans-serif; font-weight: 800; }
 
+/* Gift Preset Selector Grid */
+.gift-preset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.gift-preset-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 8px 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  touch-action: manipulation;
+}
+
+.gift-preset-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.gift-preset-card.active {
+  background: linear-gradient(135deg, rgba(255, 209, 102, 0.25), rgba(247, 37, 133, 0.25));
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 12px rgba(255, 209, 102, 0.35);
+  transform: translateY(-2px);
+}
+
+.gift-preset-icon {
+  font-size: 1.3rem;
+}
+
+.gift-preset-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+}
+
 @media (max-width: 600px) {
   body { padding: calc(16px + var(--safe-top)) 12px calc(30px + var(--safe-bottom)); }
   .studio-card { padding: 20px 16px; border-radius: 20px; }
   .cake-grid, .font-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
   .cake-card, .font-card { padding: 8px 4px; }
+  .gift-preset-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
   .theme-grid, .effect-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
   .theme-card, .effect-card { padding: 8px 2px; font-size: 0.72rem; }
   .music-grid { grid-template-columns: 1fr; gap: 6px; }
@@ -587,7 +635,69 @@ body {
         <input type="text" id="inputFrom" class="form-input" placeholder="Жишээ: Хайртай найзаас нь..." value="Хайртай найзаас нь">
       </div>
 
-      <!-- 4. Cake Style Selector (5 Designer Cakes) -->
+      <!-- 4. Surprise Gift Settings (Title, Secret Note & Photo) -->
+      <div class="form-group">
+        <label class="form-label">🎁 Бэлэгний тохиргоо (Зураг & Текст):</label>
+        
+        <!-- Gift Title -->
+        <div style="margin-bottom: 8px;">
+          <input type="text" id="inputGiftTitle" class="form-input" placeholder="Бэлгийн гарчиг (Жишээ: Миний чамд барих бэлэг! 🎁)" value="Таны төрсөн өдрийн бэлэг! 🎁">
+        </div>
+
+        <!-- Gift Secret Message -->
+        <div style="margin-bottom: 8px;">
+          <textarea id="inputGiftText" class="form-textarea" style="min-height: 75px;" placeholder="Бэлгийн сэтгэлийн үг, эрхийн бичиг эсвэл нууц ерөөлөө энд бичнэ үү...">Чамдаа төрсөн өдрийн онцгой бэлэг болгон энэхүү гэнэтийн бэлгийг барьж байна! Хүссэн бүхэн чинь биелэх болтугай! ✨💖</textarea>
+          
+          <!-- Quick Gift Idea Chips -->
+          <div class="template-chips" style="margin-top: 6px;">
+            <button type="button" class="chip" onclick="applyGiftTemplate('travel')">✈️ Аялал</button>
+            <button type="button" class="chip" onclick="applyGiftTemplate('concert')">🎟️ Тасалбар</button>
+            <button type="button" class="chip" onclick="applyGiftTemplate('flower')">💐 Сарнай</button>
+            <button type="button" class="chip" onclick="applyGiftTemplate('dinner')">🍷 Болзоо</button>
+            <button type="button" class="chip" onclick="applyGiftTemplate('secret')">💌 Нууц үг</button>
+          </div>
+        </div>
+
+        <!-- Gift Image Presets -->
+        <label class="form-label" style="font-size: 0.8rem; margin-top: 10px; margin-bottom: 6px;">🖼️ Бэлгийн зураг сонгох:</label>
+        <div class="gift-preset-grid">
+          <div class="gift-preset-card active" data-img="" onclick="selectGiftPreset(this, '')">
+            <span class="gift-preset-icon">🌟</span>
+            <span class="gift-preset-label">Зураггүй</span>
+          </div>
+          <div class="gift-preset-card" data-img="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80&auto=format" onclick="selectGiftPreset(this, 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80&auto=format')">
+            <span class="gift-preset-icon">✈️</span>
+            <span class="gift-preset-label">Аялал</span>
+          </div>
+          <div class="gift-preset-card" data-img="https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=600&q=80&auto=format" onclick="selectGiftPreset(this, 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=600&q=80&auto=format')">
+            <span class="gift-preset-icon">💐</span>
+            <span class="gift-preset-label">Сарнай</span>
+          </div>
+          <div class="gift-preset-card" data-img="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&q=80&auto=format" onclick="selectGiftPreset(this, 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&q=80&auto=format')">
+            <span class="gift-preset-icon">🎟️</span>
+            <span class="gift-preset-label">Тасалбар</span>
+          </div>
+          <div class="gift-preset-card" data-img="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&q=80&auto=format" onclick="selectGiftPreset(this, 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&q=80&auto=format')">
+            <span class="gift-preset-icon">📱</span>
+            <span class="gift-preset-label">Гаджет</span>
+          </div>
+          <div class="gift-preset-card" data-img="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80&auto=format" onclick="selectGiftPreset(this, 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80&auto=format')">
+            <span class="gift-preset-icon">🍷</span>
+            <span class="gift-preset-label">Болзоо</span>
+          </div>
+        </div>
+
+        <!-- Custom Image URL Input -->
+        <input type="url" id="inputGiftImg" class="form-input" style="margin-top: 8px;" placeholder="Эсвэл өөрийн зургийн холбоос (URL) оруулах..." oninput="onCustomGiftImgInput(this.value)">
+        
+        <!-- Live Preview Thumbnail -->
+        <div id="giftPreviewBox" style="display: none; margin-top: 10px; position: relative; border-radius: 12px; overflow: hidden; max-height: 140px; border: 1px solid rgba(255,209,102,0.4);">
+          <img id="giftPreviewImg" src="" alt="Бэлгийн зураг" style="width: 100%; height: 140px; object-fit: cover;">
+          <button type="button" onclick="clearGiftImg()" style="position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.7); border: none; color: #fff; width: 24px; height: 24px; border-radius: 50%; cursor: pointer;">✕</button>
+        </div>
+      </div>
+
+      <!-- 5. Cake Style Selector (5 Designer Cakes) -->
       <div class="form-group">
         <label class="form-label">🎂 Бялууны загвар сонгох:</label>
         <div class="cake-grid">
@@ -774,6 +884,59 @@ function applyTemplate(key) {
   }
 }
 
+// --- Gift Customization Templates & Handlers ---
+const giftTemplates = {
+  travel: "Чамдаа зориулж 2-уулаа хамтдаа аялах аяллын тийз бэлдсэн шүү! Цүнхээ бэлдээрэй ✈️🏖️✨",
+  concert: "Дуртай хамтлагийнхаа тоглолтыг хамтдаа очиж үзэх VIP тасалбар чамайг хүлээж байна! 🎟️🎶🥳",
+  flower: "Энэ хорвоогийн хамгийн үзэсгэлэнтэй чамдаа зориулан 101 сарнайн анхилуун баглаа илгээж байна! 🌹💖",
+  dinner: "Өнөө орой хамгийн дуртай ресторандаа тухлан ярилцаж, сайхан дурсамж бүтээх болзооны эрх! 🍷🕯️✨",
+  secret: "Чи бол миний амьдралын хамгийн нандин бэлэг. Энэ хорвоод мэндэлсэнд чинь үргэлж талархдаг шүү! 💖🌟"
+};
+
+function applyGiftTemplate(type) {
+  if (giftTemplates[type]) {
+    document.getElementById('inputGiftText').value = giftTemplates[type];
+  }
+}
+
+let selectedGiftImg = '';
+
+function selectGiftPreset(el, imgUrl) {
+  document.querySelectorAll('.gift-preset-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  selectedGiftImg = imgUrl;
+  document.getElementById('inputGiftImg').value = imgUrl;
+  renderGiftPreview(imgUrl);
+}
+
+function onCustomGiftImgInput(val) {
+  selectedGiftImg = val.trim();
+  document.querySelectorAll('.gift-preset-card').forEach(c => {
+    c.classList.toggle('active', c.getAttribute('data-img') === selectedGiftImg);
+  });
+  renderGiftPreview(selectedGiftImg);
+}
+
+function renderGiftPreview(url) {
+  const box = document.getElementById('giftPreviewBox');
+  const img = document.getElementById('giftPreviewImg');
+  if (url) {
+    img.src = url;
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+    img.src = '';
+  }
+}
+
+function clearGiftImg() {
+  selectedGiftImg = '';
+  document.getElementById('inputGiftImg').value = '';
+  renderGiftPreview('');
+  const firstPreset = document.querySelector('.gift-preset-card');
+  if (firstPreset) selectGiftPreset(firstPreset, '');
+}
+
 function selectTheme(theme) {
   currentTheme = theme;
   document.querySelectorAll('.theme-card').forEach(c => {
@@ -892,6 +1055,9 @@ function buildShareUrl() {
   const name = document.getElementById('inputName').value.trim() || 'найз';
   const msg = document.getElementById('inputMsg').value.trim() || templates.friend;
   const from = document.getElementById('inputFrom').value.trim() || 'Найзаас нь';
+  const giftTitle = document.getElementById('inputGiftTitle').value.trim();
+  const giftText = document.getElementById('inputGiftText').value.trim();
+  const giftImg = selectedGiftImg || document.getElementById('inputGiftImg').value.trim();
 
   // Base URL pointing to index.html (the pure recipient card)
   const url = new URL(window.location.href);
@@ -909,6 +1075,9 @@ function buildShareUrl() {
   url.searchParams.set('theme', currentTheme);
   url.searchParams.set('effect', currentEffect);
   url.searchParams.set('music', currentMusic);
+  if (giftTitle) url.searchParams.set('gift_title', giftTitle);
+  if (giftText) url.searchParams.set('gift_text', giftText);
+  if (giftImg) url.searchParams.set('gift_img', giftImg);
   url.searchParams.set('hide_create', '1');
 
   return url.toString();
