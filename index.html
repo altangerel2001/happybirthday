@@ -14,7 +14,7 @@
 <!-- Google Fonts for English and Mongolian Cyrillic support -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comfortaa:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comfortaa:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap&subset=cyrillic,cyrillic-ext" rel="stylesheet">
 
 <!-- GSAP for timeline animations -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -411,66 +411,179 @@ html, body {
 /* Greeting Header */
 .greeting-box {
   width: 100%;
-  max-width: 600px;
-  margin-bottom: 12px;
+  max-width: 580px;
+  margin-bottom: 10px;
   z-index: 15;
 }
 
 .greeting-sup {
-  font-family: 'Comfortaa', cursive;
-  font-size: clamp(0.85rem, 2.5vw, 1.2rem);
+  font-size: clamp(0.76rem, 2.2vw, 0.92rem);
   color: var(--accent-gold);
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   text-shadow: 0 0 10px var(--accent-glow);
   opacity: 0;
   transform: translateY(-8px);
+  font-weight: 600;
 }
 
 .greeting-name {
-  font-family: 'Caveat', 'Pacifico', cursive;
-  font-size: clamp(2.3rem, 7vw, 4.2rem);
+  font-size: clamp(2.1rem, 6.5vw, 3.8rem);
   font-weight: 700;
   line-height: 1.15;
-  color: #fff9ea;
-  text-shadow: 0 0 18px var(--accent-glow), 0 0 35px rgba(255, 209, 102, 0.4);
+  color: #fffaf0;
+  text-shadow: 0 2px 18px var(--accent-glow), 0 0 35px rgba(255, 209, 102, 0.35);
   margin-bottom: 10px;
   opacity: 0;
-  transform: scale(0.85);
+  transform: scale(0.88);
   word-break: break-word;
 }
 
 .message-card {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  padding: 12px 18px;
-  border-radius: 18px;
-  max-width: 520px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 14px 20px;
+  border-radius: 20px;
+  max-width: 500px;
   margin: 0 auto 6px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.12);
   opacity: 0;
   transform: translateY(15px);
   transition: all 0.3s ease;
 }
 
 .greeting-text {
-  font-size: clamp(0.95rem, 2.4vw, 1.15rem);
-  line-height: 1.5;
+  font-size: clamp(0.92rem, 2.3vw, 1.08rem);
+  line-height: 1.65;
   color: #ffffff;
-  font-weight: 500;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
 }
 
 .greeting-from {
-  margin-top: 6px;
-  font-size: 0.88rem;
-  font-style: italic;
+  margin-top: 8px;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
   color: var(--accent-gold);
   text-align: right;
   display: block;
+  font-weight: 600;
+}
+
+/* ==============================================================
+   TYPOGRAPHY THEMES (Modern, Comfortaa, Playfair, Handwriting, Nunito)
+   ============================================================== */
+/* 1. Modern Minimal (Default) */
+[data-font="modern"] {
+  font-family: 'Montserrat', sans-serif;
+}
+[data-font="modern"] .greeting-name,
+[data-font="modern"] .intro-title {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: -0.5px;
+  font-weight: 800;
+}
+[data-font="modern"] .greeting-sup {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 2.5px;
+}
+[data-font="modern"] .greeting-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* 2. Soft & Rounded */
+[data-font="comfortaa"] {
+  font-family: 'Comfortaa', cursive;
+}
+[data-font="comfortaa"] .greeting-name,
+[data-font="comfortaa"] .intro-title {
+  font-family: 'Comfortaa', cursive;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+[data-font="comfortaa"] .greeting-sup {
+  font-family: 'Comfortaa', cursive;
+  letter-spacing: 2px;
+}
+[data-font="comfortaa"] .greeting-text {
+  font-family: 'Comfortaa', cursive;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+/* 3. Luxury Editorial Serif */
+[data-font="playfair"] {
+  font-family: 'Montserrat', sans-serif;
+}
+[data-font="playfair"] .greeting-name,
+[data-font="playfair"] .intro-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+[data-font="playfair"] .greeting-sup {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 3px;
+  font-size: 0.72rem;
+}
+[data-font="playfair"] .greeting-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.02rem, 2.6vw, 1.2rem);
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+/* 4. Warm Handwritten Script */
+[data-font="handwriting"] {
+  font-family: 'Caveat', cursive;
+}
+[data-font="handwriting"] .greeting-name,
+[data-font="handwriting"] .intro-title {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(2.5rem, 8vw, 4.4rem);
+  font-weight: 700;
+  line-height: 1.05;
+}
+[data-font="handwriting"] .greeting-sup {
+  font-family: 'Caveat', cursive;
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+}
+[data-font="handwriting"] .greeting-text {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.25rem, 3.2vw, 1.48rem);
+  line-height: 1.45;
+}
+[data-font="handwriting"] .greeting-from {
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+}
+
+/* 5. Clean Soft Geometric */
+[data-font="nunito"] {
+  font-family: 'Nunito', sans-serif;
+}
+[data-font="nunito"] .greeting-name,
+[data-font="nunito"] .intro-title {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+[data-font="nunito"] .greeting-sup {
+  font-family: 'Nunito', sans-serif;
+  letter-spacing: 2px;
+}
+[data-font="nunito"] .greeting-text {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 500;
+  line-height: 1.65;
 }
 
 /* ==============================================================
@@ -1451,19 +1564,131 @@ html, body {
         <!-- Minimalist Ceramic Plate -->
         <g id="svgPlate">
           <ellipse cx="170" cy="260" rx="126" ry="18" fill="url(#minimalPlateGrad)"/>
-          <ellipse cx="170" cy="258" rx="118" ry="14" fill="#ffffff"/>
+          <ellipse id="svgPlateInner" cx="170" cy="258" rx="118" ry="14" fill="#ffffff"/>
         </g>
 
         <!-- Minimalist Cake Cylinder -->
         <g id="svgCakeBody">
           <!-- Cake Base Body -->
-          <path d="M85 165 C85 190 255 190 255 165 L255 236 C255 261 85 261 85 236 Z" fill="url(#minimalCakeGrad)"/>
+          <path id="cakeBase" d="M85 165 C85 190 255 190 255 165 L255 236 C255 261 85 261 85 236 Z" fill="url(#minimalCakeGrad)"/>
           <!-- Subtle Frosted Highlight -->
-          <path d="M85 165 L85 236 C105 246 130 249 135 249 L135 174 C130 174 105 171 85 165 Z" fill="#ffffff" opacity="0.15"/>
+          <path id="cakeHighlight" d="M85 165 L85 236 C105 246 130 249 135 249 L135 174 C130 174 105 171 85 165 Z" fill="#ffffff" opacity="0.15"/>
           <!-- Cake Top Ellipse -->
-          <ellipse cx="170" cy="165" rx="85" ry="22" fill="url(#minimalCakeTopGrad)"/>
+          <ellipse id="cakeTop" cx="170" cy="165" rx="85" ry="22" fill="url(#minimalCakeTopGrad)"/>
           <!-- Clean Minimal Frosting Rim -->
-          <path d="M85 165 C95 171 105 171 115 166 C125 161 135 161 145 167 C155 173 165 173 175 167 C185 161 195 161 205 166 C215 171 225 171 235 166 C245 161 250 162 255 165 C255 168 85 168 85 165 Z" fill="#ffffff" opacity="0.85"/>
+          <path id="cakeFrostingRim" d="M85 165 C95 171 105 171 115 166 C125 161 135 161 145 167 C155 173 165 173 175 167 C185 161 195 161 205 166 C215 171 225 171 235 166 C245 161 250 162 255 165 C255 168 85 168 85 165 Z" fill="#ffffff" opacity="0.85"/>
+        </g>
+
+        <!-- ================= 5 UNIQUE DESIGNER CAKE DECORATIONS ================= -->
+        <!-- 1. Strawberry Cream Topping (Default) -->
+        <g id="decor-strawberry" class="cake-decor">
+          <g transform="translate(108, 166)">
+            <path d="M0 -7 C4 -7 7 -2 6 5 C5 9 0 11 0 11 C0 11 -5 9 -6 5 C-7 -2 -4 -7 0 -7 Z" fill="#ef233c"/>
+            <ellipse cx="-1.5" cy="-1" rx="1.5" ry="3.5" fill="#ff758f" opacity="0.6"/>
+            <circle cx="-1" cy="2" r="0.6" fill="#fff" opacity="0.8"/>
+            <circle cx="2" cy="4" r="0.6" fill="#fff" opacity="0.8"/>
+            <circle cx="0" cy="7" r="0.5" fill="#fff" opacity="0.8"/>
+            <path d="M0 -7 C-3 -10 -5 -8 -4 -6 C-2 -6 -1 -6 0 -7 C1 -6 2 -6 4 -6 C5 -8 3 -10 0 -7 Z" fill="#2b9348"/>
+          </g>
+          <g transform="translate(140, 175)">
+            <path d="M0 -7.5 C4.5 -7.5 7.5 -2 6.5 5 C5.5 9.5 0 11.5 0 11.5 C0 11.5 -5.5 9.5 -6.5 5 C-7.5 -2 -4.5 -7.5 0 -7.5 Z" fill="#ef233c"/>
+            <ellipse cx="-1.5" cy="-1.5" rx="1.6" ry="4" fill="#ff758f" opacity="0.6"/>
+            <circle cx="-1" cy="2" r="0.6" fill="#fff" opacity="0.8"/>
+            <circle cx="2.2" cy="4" r="0.6" fill="#fff" opacity="0.8"/>
+            <circle cx="0" cy="7.5" r="0.5" fill="#fff" opacity="0.8"/>
+            <path d="M0 -7.5 C-3.5 -10.5 -5.5 -8.5 -4.5 -6.5 C-2 -6.5 -1 -6.5 0 -7.5 C1 -6.5 2 -6.5 4.5 -6.5 C5.5 -8.5 3.5 -10.5 0 -7.5 Z" fill="#2b9348"/>
+          </g>
+          <g transform="translate(200, 175)">
+            <path d="M0 -7.5 C4.5 -7.5 7.5 -2 6.5 5 C5.5 9.5 0 11.5 0 11.5 C0 11.5 -5.5 9.5 -6.5 5 C-7.5 -2 -4.5 -7.5 0 -7.5 Z" fill="#ef233c"/>
+            <ellipse cx="-1.5" cy="-1.5" rx="1.6" ry="4" fill="#ff758f" opacity="0.6"/>
+            <circle cx="-1" cy="2" r="0.6" fill="#fff" opacity="0.8"/>
+            <circle cx="2.2" cy="4" r="0.6" fill="#fff" opacity="0.8"/>
+            <circle cx="0" cy="7.5" r="0.5" fill="#fff" opacity="0.8"/>
+            <path d="M0 -7.5 C-3.5 -10.5 -5.5 -8.5 -4.5 -6.5 C-2 -6.5 -1 -6.5 0 -7.5 C1 -6.5 2 -6.5 4.5 -6.5 C5.5 -8.5 3.5 -10.5 0 -7.5 Z" fill="#2b9348"/>
+          </g>
+          <g transform="translate(232, 166)">
+            <path d="M0 -7 C4 -7 7 -2 6 5 C5 9 0 11 0 11 C0 11 -5 9 -6 5 C-7 -2 -4 -7 0 -7 Z" fill="#ef233c"/>
+            <ellipse cx="-1.5" cy="-1" rx="1.5" ry="3.5" fill="#ff758f" opacity="0.6"/>
+            <circle cx="-1" cy="2" r="0.6" fill="#fff" opacity="0.8"/>
+            <circle cx="2" cy="4" r="0.6" fill="#fff" opacity="0.8"/>
+            <circle cx="0" cy="7" r="0.5" fill="#fff" opacity="0.8"/>
+            <path d="M0 -7 C-3 -10 -5 -8 -4 -6 C-2 -6 -1 -6 0 -7 C1 -6 2 -6 4 -6 C5 -8 3 -10 0 -7 Z" fill="#2b9348"/>
+          </g>
+          <circle cx="124" cy="173" r="4.5" fill="#ffffff" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.15))"/>
+          <circle cx="170" cy="178" r="5" fill="#ffffff" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.15))"/>
+          <circle cx="216" cy="173" r="4.5" fill="#ffffff" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.15))"/>
+        </g>
+
+        <!-- 2. Royal Dark Chocolate Truffle Decor -->
+        <g id="decor-chocolate" class="cake-decor" style="display: none;">
+          <g transform="translate(112, 168)">
+            <circle cx="0" cy="0" r="6" fill="#1f0f07"/>
+            <ellipse cx="-1.5" cy="-1.5" rx="2" ry="1.2" fill="#ffd700" opacity="0.6"/>
+          </g>
+          <g transform="translate(142, 176)">
+            <circle cx="0" cy="0" r="6.5" fill="#1f0f07"/>
+            <ellipse cx="-1.5" cy="-1.5" rx="2.5" ry="1.5" fill="#ffd700" opacity="0.7"/>
+          </g>
+          <g transform="translate(198, 176)">
+            <circle cx="0" cy="0" r="6.5" fill="#1f0f07"/>
+            <ellipse cx="-1.5" cy="-1.5" rx="2.5" ry="1.5" fill="#ffd700" opacity="0.7"/>
+          </g>
+          <g transform="translate(228, 168)">
+            <circle cx="0" cy="0" r="6" fill="#1f0f07"/>
+            <ellipse cx="-1.5" cy="-1.5" rx="2" ry="1.2" fill="#ffd700" opacity="0.6"/>
+          </g>
+          <polygon points="126,173 128,175 127,177 125,175" fill="#ffd700"/>
+          <polygon points="168,178 170,180 169,182 167,180" fill="#ffd700"/>
+          <polygon points="214,173 216,175 215,177 213,175" fill="#ffd700"/>
+          <polygon points="155,173 157,175 156,176 154,175" fill="#ffd700" opacity="0.8"/>
+          <polygon points="185,173 187,175 186,176 184,175" fill="#ffd700" opacity="0.8"/>
+        </g>
+
+        <!-- 3. Zen Matcha Cream Decor -->
+        <g id="decor-matcha" class="cake-decor" style="display: none;">
+          <circle cx="106" cy="167" r="4.5" fill="#ffffff" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.1))"/>
+          <circle cx="126" cy="172" r="4.5" fill="#ffffff" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.1))"/>
+          <circle cx="147" cy="176" r="5" fill="#ffffff" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.1))"/>
+          <circle cx="170" cy="179" r="5.5" fill="#ffffff" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.1))"/>
+          <circle cx="193" cy="176" r="5" fill="#ffffff" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.1))"/>
+          <circle cx="214" cy="172" r="4.5" fill="#ffffff" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.1))"/>
+          <circle cx="234" cy="167" r="4.5" fill="#ffffff" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.1))"/>
+          <circle cx="116" cy="170" r="1.5" fill="#2d6a4f"/>
+          <circle cx="136" cy="174" r="1.5" fill="#2d6a4f"/>
+          <circle cx="158" cy="177" r="1.5" fill="#2d6a4f"/>
+          <circle cx="182" cy="177" r="1.5" fill="#2d6a4f"/>
+          <circle cx="204" cy="174" r="1.5" fill="#2d6a4f"/>
+          <circle cx="224" cy="170" r="1.5" fill="#2d6a4f"/>
+        </g>
+
+        <!-- 4. Blueberry Lavender Decor -->
+        <g id="decor-lavender" class="cake-decor" style="display: none;">
+          <g transform="translate(110, 167)"><circle cx="0" cy="0" r="5" fill="#2e1065"/><ellipse cx="-1.2" cy="-1.2" rx="1.5" ry="1" fill="#c084fc" opacity="0.7"/></g>
+          <g transform="translate(136, 174)"><circle cx="0" cy="0" r="5.5" fill="#2e1065"/><ellipse cx="-1.3" cy="-1.3" rx="1.7" ry="1.1" fill="#c084fc" opacity="0.7"/></g>
+          <g transform="translate(156, 177)"><circle cx="0" cy="0" r="5" fill="#2e1065"/><ellipse cx="-1.2" cy="-1.2" rx="1.5" ry="1" fill="#c084fc" opacity="0.7"/></g>
+          <g transform="translate(184, 177)"><circle cx="0" cy="0" r="5" fill="#2e1065"/><ellipse cx="-1.2" cy="-1.2" rx="1.5" ry="1" fill="#c084fc" opacity="0.7"/></g>
+          <g transform="translate(204, 174)"><circle cx="0" cy="0" r="5.5" fill="#2e1065"/><ellipse cx="-1.3" cy="-1.3" rx="1.7" ry="1.1" fill="#c084fc" opacity="0.7"/></g>
+          <g transform="translate(230, 167)"><circle cx="0" cy="0" r="5" fill="#2e1065"/><ellipse cx="-1.2" cy="-1.2" rx="1.5" ry="1" fill="#c084fc" opacity="0.7"/></g>
+          <polygon points="123,171 124,173 126,173 124.5,174.5 125,176.5 123,175 121,176.5 121.5,174.5 120,173 122,173" fill="#fef08a"/>
+          <polygon points="170,179 171,181 173,181 171.5,182.5 172,184.5 170,183 168,184.5 168.5,182.5 167,181 169,181" fill="#fef08a"/>
+          <polygon points="217,171 218,173 220,173 218.5,174.5 219,176.5 217,175 215,176.5 215.5,174.5 214,173 216,173" fill="#fef08a"/>
+        </g>
+
+        <!-- 5. Korean Minimal Bento Cake Decor -->
+        <g id="decor-bento" class="cake-decor" style="display: none;">
+          <ellipse cx="170" cy="165" rx="87" ry="24" fill="none" stroke="#fed7aa" stroke-width="4.5" stroke-dasharray="8 6" stroke-linecap="round"/>
+          <g transform="translate(170, 180)">
+            <circle cx="0" cy="0" r="7.5" fill="#e11d48"/>
+            <ellipse cx="-2.2" cy="-2.5" rx="2.5" ry="1.5" fill="#ffffff" opacity="0.7"/>
+            <path d="M0 -7 C-2 -15 3 -20 8 -22" fill="none" stroke="#15803d" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M4 -18 C7 -20 10 -19 9 -17 C8 -16 6 -16 4 -18 Z" fill="#22c55e"/>
+          </g>
+          <circle cx="120" cy="170" r="1.8" fill="#f43f5e"/>
+          <circle cx="138" cy="173" r="1.8" fill="#38bdf8"/>
+          <circle cx="152" cy="175" r="1.8" fill="#facc15"/>
+          <circle cx="188" cy="175" r="1.8" fill="#a855f7"/>
+          <circle cx="202" cy="173" r="1.8" fill="#34d399"/>
+          <circle cx="220" cy="170" r="1.8" fill="#f43f5e"/>
         </g>
 
         <!-- ================= 5 ELEGANT CANDLES & FLAMES ================= -->
@@ -1578,8 +1803,8 @@ html, body {
       </button>
     </div>
 
-    <!-- Discreet link to the Creation Studio -->
-    <div class="recipient-footer">
+    <!-- Discreet link to the Creation Studio (Only shown on default/generic page, hidden on recipient personalized cards) -->
+    <div class="recipient-footer" id="recipientFooter">
       <a href="create.html" class="create-card-link" title="Өөрийн нэрээр шинэ мэндчилгээ бүтээх">
         ✨ Өөр хүнд зориулж мэндчилгээ бүтээх үү? <strong>Энд дарна уу 🪄</strong>
       </a>
@@ -2396,6 +2621,126 @@ function showToast(text, icon = '✨') {
   }, 3000);
 }
 
+// --- 5 Designer Cake Styles Configuration ---
+const cakeStyles = {
+  strawberry: {
+    name: 'Гүзээлзгэнэтэй ваниль',
+    bodyStops: ['#fce7f3', '#fff1f2', '#fde2e4', '#f9bec7'],
+    topStops: ['#ffffff', '#fff0f3'],
+    frostingColor: '#ffffff',
+    frostingOpacity: '0.85',
+    plateStops: ['#ffffff', '#f1f5f9', '#cbd5e1'],
+    plateInner: '#ffffff',
+    candleStops: ['#ffd166', '#fffbeb', '#f59e0b'],
+    decorId: 'decor-strawberry'
+  },
+  chocolate: {
+    name: 'Бельги хар шоколад',
+    bodyStops: ['#3d2110', '#4a2814', '#2d160a', '#1e0d05'],
+    topStops: ['#542e17', '#2e160a'],
+    frostingColor: '#ffddaa',
+    frostingOpacity: '0.9',
+    plateStops: ['#334155', '#1e293b', '#0f172a'],
+    plateInner: '#1e293b',
+    candleStops: ['#facc15', '#fef08a', '#ca8a04'],
+    decorId: 'decor-chocolate'
+  },
+  matcha: {
+    name: 'Япон матча ногоон цай',
+    bodyStops: ['#d8f3dc', '#b7e4c7', '#95d5b2', '#74c69d'],
+    topStops: ['#ffffff', '#edf7f0'],
+    frostingColor: '#ffffff',
+    frostingOpacity: '0.9',
+    plateStops: ['#faf7f2', '#f0ede6', '#ded7cb'],
+    plateInner: '#ffffff',
+    candleStops: ['#74c69d', '#e8f5e9', '#2d6a4f'],
+    decorId: 'decor-matcha'
+  },
+  lavender: {
+    name: 'Нэрстэй лаванда',
+    bodyStops: ['#ede9fe', '#ddd6fe', '#c4b5fd', '#a78bfa'],
+    topStops: ['#ffffff', '#f5f3ff'],
+    frostingColor: '#ffffff',
+    frostingOpacity: '0.9',
+    plateStops: ['#ffffff', '#f3e8ff', '#d8b4fe'],
+    plateInner: '#ffffff',
+    candleStops: ['#c084fc', '#f3e8ff', '#9333ea'],
+    decorId: 'decor-lavender'
+  },
+  bento: {
+    name: 'Солонгос бенто бялуу',
+    bodyStops: ['#ffffff', '#fdfefe', '#f8fafc', '#f1f5f9'],
+    topStops: ['#ffffff', '#f8fafc'],
+    frostingColor: '#fde68a',
+    frostingOpacity: '0.95',
+    plateStops: ['#ffffff', '#fce7f3', '#fbcfe8'],
+    plateInner: '#ffffff',
+    candleStops: ['#f43f5e', '#ffe4e6', '#e11d48'],
+    decorId: 'decor-bento'
+  }
+};
+
+let currentCake = 'strawberry';
+function selectCake(cakeType) {
+  const config = cakeStyles[cakeType] || cakeStyles.strawberry;
+  currentCake = cakeType in cakeStyles ? cakeType : 'strawberry';
+
+  // Body gradient
+  const bodyStops = document.querySelectorAll('#minimalCakeGrad stop');
+  if (bodyStops.length >= 4) {
+    bodyStops[0].setAttribute('stop-color', config.bodyStops[0]);
+    bodyStops[1].setAttribute('stop-color', config.bodyStops[1]);
+    bodyStops[2].setAttribute('stop-color', config.bodyStops[2]);
+    bodyStops[3].setAttribute('stop-color', config.bodyStops[3]);
+  }
+
+  // Top gradient
+  const topStops = document.querySelectorAll('#minimalCakeTopGrad stop');
+  if (topStops.length >= 2) {
+    topStops[0].setAttribute('stop-color', config.topStops[0]);
+    topStops[1].setAttribute('stop-color', config.topStops[1]);
+  }
+
+  // Frosting rim
+  const frostingRim = document.getElementById('cakeFrostingRim');
+  if (frostingRim) {
+    frostingRim.setAttribute('fill', config.frostingColor);
+    frostingRim.setAttribute('opacity', config.frostingOpacity);
+  }
+
+  // Plate
+  const plateStops = document.querySelectorAll('#minimalPlateGrad stop');
+  if (plateStops.length >= 3) {
+    plateStops[0].setAttribute('stop-color', config.plateStops[0]);
+    plateStops[1].setAttribute('stop-color', config.plateStops[1]);
+    plateStops[2].setAttribute('stop-color', config.plateStops[2]);
+  }
+  const plateInner = document.getElementById('svgPlateInner');
+  if (plateInner) plateInner.setAttribute('fill', config.plateInner);
+
+  // Candles
+  const candleStops = document.querySelectorAll('#candleStickGrad stop');
+  if (candleStops.length >= 3) {
+    candleStops[0].setAttribute('stop-color', config.candleStops[0]);
+    candleStops[1].setAttribute('stop-color', config.candleStops[1]);
+    candleStops[2].setAttribute('stop-color', config.candleStops[2]);
+  }
+
+  // Toggle decor
+  document.querySelectorAll('.cake-decor').forEach(el => {
+    el.style.display = 'none';
+  });
+  const activeDecor = document.getElementById(config.decorId);
+  if (activeDecor) activeDecor.style.display = 'inline';
+}
+
+let currentFont = 'modern';
+function selectFont(fontName) {
+  const validFonts = ['modern', 'comfortaa', 'playfair', 'handwriting', 'nunito'];
+  currentFont = validFonts.includes(fontName) ? fontName : 'modern';
+  document.body.setAttribute('data-font', currentFont);
+}
+
 // --- URL Parameter Initialization ---
 function initFromUrlParams() {
   const params = new URLSearchParams(window.location.search);
@@ -2405,6 +2750,17 @@ function initFromUrlParams() {
   const theme = params.get('theme');
   const music = params.get('music');
   const effect = params.get('effect');
+  const cake = params.get('cake');
+  const font = params.get('font');
+
+  // Хэрэв өөр хүнд зориулж мэндчилгээ илгээж байгаа бол (URL дээр name байгаа үед)
+  // хүлээн авагчийн линк дээр "Өөр хүнд зориулж мэндчилгээ бүтээх үү?" гэсэн хэсэг огт харагдахгүй
+  const footer = document.getElementById('recipientFooter');
+  if (footer) {
+    const isPersonalized = Boolean(name && name.trim());
+    const forceHide = params.get('hide_create') === '1';
+    footer.style.display = (isPersonalized || forceHide) ? 'none' : 'block';
+  }
 
   if (name) {
     updateCardContent(name, msg || templates.friend, from || 'Найзаас нь', theme || 'night');
@@ -2419,6 +2775,10 @@ function initFromUrlParams() {
   if (music && ['piano', 'birthday', 'cosmic', 'none'].includes(music)) {
     selectIntroMusic(music);
   }
+
+  // Apply selected Cake & Font
+  selectCake(cake || 'strawberry');
+  selectFont(font || 'modern');
 }
 
 // --- Event Listeners ---

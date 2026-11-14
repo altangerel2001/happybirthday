@@ -9,7 +9,7 @@
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comfortaa:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comfortaa:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap&subset=cyrillic,cyrillic-ext" rel="stylesheet">
 
 <!-- Canvas Confetti -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -416,9 +416,123 @@ body {
   transform: translateX(-50%) translateY(0);
 }
 
+/* Cake Selector Grid */
+.cake-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+  gap: 8px;
+}
+
+.cake-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  padding: 10px 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  touch-action: manipulation;
+}
+
+.cake-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.cake-card.active {
+  background: linear-gradient(135deg, rgba(255, 209, 102, 0.25), rgba(247, 37, 133, 0.25));
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 14px rgba(255, 209, 102, 0.35);
+  transform: translateY(-2px);
+}
+
+.cake-card-icon {
+  font-size: 1.5rem;
+}
+
+.cake-card-title {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.cake-card-sub {
+  font-size: 0.62rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.2;
+}
+
+/* Font Selector Grid */
+.font-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+  gap: 8px;
+}
+
+.font-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  padding: 10px 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  touch-action: manipulation;
+}
+
+.font-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.font-card.active {
+  background: linear-gradient(135deg, rgba(255, 209, 102, 0.25), rgba(247, 37, 133, 0.25));
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 14px rgba(255, 209, 102, 0.35);
+  transform: translateY(-2px);
+}
+
+.font-card-preview {
+  font-size: 0.95rem;
+  color: var(--accent-gold);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.font-card-title {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.font-card-sub {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Font samples */
+.font-sample-modern { font-family: 'Montserrat', sans-serif; font-weight: 800; }
+.font-sample-comfortaa { font-family: 'Comfortaa', cursive; font-weight: 700; }
+.font-sample-playfair { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 1.05rem; }
+.font-sample-handwriting { font-family: 'Caveat', cursive; font-size: 1.35rem !important; }
+.font-sample-nunito { font-family: 'Nunito', sans-serif; font-weight: 800; }
+
 @media (max-width: 600px) {
   body { padding: calc(16px + var(--safe-top)) 12px calc(30px + var(--safe-bottom)); }
   .studio-card { padding: 20px 16px; border-radius: 20px; }
+  .cake-grid, .font-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .cake-card, .font-card { padding: 8px 4px; }
   .theme-grid, .effect-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
   .theme-card, .effect-card { padding: 8px 2px; font-size: 0.72rem; }
   .music-grid { grid-template-columns: 1fr; gap: 6px; }
@@ -473,7 +587,71 @@ body {
         <input type="text" id="inputFrom" class="form-input" placeholder="Жишээ: Хайртай найзаас нь..." value="Хайртай найзаас нь">
       </div>
 
-      <!-- 4. Theme Selector (8 Themes) -->
+      <!-- 4. Cake Style Selector (5 Designer Cakes) -->
+      <div class="form-group">
+        <label class="form-label">🎂 Бялууны загвар сонгох:</label>
+        <div class="cake-grid">
+          <div class="cake-card active" data-value="strawberry" onclick="selectCake('strawberry')">
+            <div class="cake-card-icon">🍓</div>
+            <div class="cake-card-title">Гүзээлзгэнэ</div>
+            <div class="cake-card-sub">Ваниль, цөцгий</div>
+          </div>
+          <div class="cake-card" data-value="chocolate" onclick="selectCake('chocolate')">
+            <div class="cake-card-icon">🍫</div>
+            <div class="cake-card-title">Хар шоколад</div>
+            <div class="cake-card-sub">Тансаг какао</div>
+          </div>
+          <div class="cake-card" data-value="matcha" onclick="selectCake('matcha')">
+            <div class="cake-card-icon">🍵</div>
+            <div class="cake-card-title">Япон матча</div>
+            <div class="cake-card-sub">Ногоон цай</div>
+          </div>
+          <div class="cake-card" data-value="lavender" onclick="selectCake('lavender')">
+            <div class="cake-card-icon">🫐</div>
+            <div class="cake-card-title">Лаванда нэрс</div>
+            <div class="cake-card-sub">Нил ягаан</div>
+          </div>
+          <div class="cake-card" data-value="bento" onclick="selectCake('bento')">
+            <div class="cake-card-icon">🎂</div>
+            <div class="cake-card-title">Бенто бялуу</div>
+            <div class="cake-card-sub">Минимал интоор</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Typography / Font Selector (5 Fonts) -->
+      <div class="form-group">
+        <label class="form-label">✍️ Бичгийн хэв / Фонт сонгох:</label>
+        <div class="font-grid">
+          <div class="font-card active" data-value="modern" onclick="selectFont('modern')">
+            <div class="font-card-preview font-sample-modern">Мэндчилгээ</div>
+            <div class="font-card-title">Модерн</div>
+            <div class="font-card-sub">Цэвэрхэн, минимал</div>
+          </div>
+          <div class="font-card" data-value="comfortaa" onclick="selectFont('comfortaa')">
+            <div class="font-card-preview font-sample-comfortaa">Мэндчилгээ</div>
+            <div class="font-card-title">Дугуй</div>
+            <div class="font-card-sub">Зөөлөн, найрсаг</div>
+          </div>
+          <div class="font-card" data-value="playfair" onclick="selectFont('playfair')">
+            <div class="font-card-preview font-sample-playfair">Мэндчилгээ</div>
+            <div class="font-card-title">Тансаг</div>
+            <div class="font-card-sub">Классик сэриф</div>
+          </div>
+          <div class="font-card" data-value="handwriting" onclick="selectFont('handwriting')">
+            <div class="font-card-preview font-sample-handwriting">Мэндчилгээ</div>
+            <div class="font-card-title">Бичмэл</div>
+            <div class="font-card-sub">Гараар бичсэн мэт</div>
+          </div>
+          <div class="font-card" data-value="nunito" onclick="selectFont('nunito')">
+            <div class="font-card-preview font-sample-nunito">Мэндчилгээ</div>
+            <div class="font-card-title">Цэмбэгэр</div>
+            <div class="font-card-sub">Энгийн, цэгцтэй</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Theme Selector (8 Themes) -->
       <div class="form-group">
         <label class="form-label">🎨 Өнгөний сэдэв (Theme):</label>
         <div class="theme-grid">
@@ -559,6 +737,8 @@ body {
 </div>
 
 <script>
+let currentCake = 'strawberry';
+let currentFont = 'modern';
 let currentTheme = 'night';
 let currentEffect = 'balloons';
 let currentMusic = 'piano';
@@ -573,6 +753,20 @@ const templates = {
   success: "Төрсөн өдрийн гал халуун мэнд хүргэе! Ирээдүйн бүх зорилго, хүсэл тэмүүлэл нь сүндэрлэн биелж, эрүүл энх байхыг ерөөе! 🌟🥂",
   funny: "Нэг насаар хөгширч байгаад нь баяр хүргэе! Гэхдээ битгий санаа зов, чи хэзээд миний харсан хамгийн хөөрхөн нь шүү! 🥳🎂"
 };
+
+function selectCake(cake) {
+  currentCake = cake;
+  document.querySelectorAll('.cake-card').forEach(c => {
+    c.classList.toggle('active', c.getAttribute('data-value') === cake);
+  });
+}
+
+function selectFont(font) {
+  currentFont = font;
+  document.querySelectorAll('.font-card').forEach(c => {
+    c.classList.toggle('active', c.getAttribute('data-value') === font);
+  });
+}
 
 function applyTemplate(key) {
   if (templates[key]) {
@@ -710,9 +904,12 @@ function buildShareUrl() {
   url.searchParams.set('name', name);
   url.searchParams.set('msg', msg);
   url.searchParams.set('from', from);
+  url.searchParams.set('cake', currentCake);
+  url.searchParams.set('font', currentFont);
   url.searchParams.set('theme', currentTheme);
   url.searchParams.set('effect', currentEffect);
   url.searchParams.set('music', currentMusic);
+  url.searchParams.set('hide_create', '1');
 
   return url.toString();
 }
